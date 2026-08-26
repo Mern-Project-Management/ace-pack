@@ -8,12 +8,12 @@ export const metadata: Metadata = {
 };
 
 const galleryItems = [
-  { id: 1, title: 'Hinge Cups & Sauce Containers', category: 'Takeaway Packaging', image: 'https://plus.unsplash.com/premium_photo-1664392020927-9344e87b378d?q=80&w=800&auto=format&fit=crop' },
-  { id: 2, title: 'RO Series Round Gravy Tubs', category: 'Soup & Curry Tubs', image: 'https://plus.unsplash.com/premium_photo-1701213306445-9874fe01971a?w=800&auto=format&fit=crop' },
-  { id: 3, title: 'RE Bento Meal Delivery Boxes', category: 'Cloud Kitchen Combos', image: 'https://plus.unsplash.com/premium_photo-1701213306583-082f9bfd88b4?w=800&auto=format&fit=crop' },
-  { id: 4, title: 'Portion Control Cups', category: 'Side Condiments', image: 'https://plus.unsplash.com/premium_photo-1701213306476-132f16a0a01e?w=800&auto=format&fit=crop' },
-  { id: 5, title: 'Cleanroom Injection Moulding Bay', category: 'Plant Facility', image: 'https://plus.unsplash.com/premium_photo-1701213306583-082f9bfd88b4?q=80&w=800&auto=format&fit=crop' },
-  { id: 6, title: 'Custom IML Branded Packaging', category: 'In-Mould Labelling', image: 'https://plus.unsplash.com/premium_photo-1664392020927-9344e87b378d?q=80&w=800&auto=format&fit=crop' }
+  { id: 1, title: 'Hinge Cups & Sauce Containers', category: 'Takeaway Packaging', image: '/images/media_1787717762050.jpg' },
+  { id: 2, title: 'RO Series Round Gravy Tubs', category: 'Soup & Curry Tubs', image: 'https://images.unsplash.com/photo-1581059474347-833e80d81ba8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+  { id: 3, title: 'RE Bento Meal Delivery Boxes', category: 'Cloud Kitchen Combos', image: '/50d728a7-e02c-49d9-b530-58a7db8a6ecc.png' },
+  { id: 4, title: 'Portion Control Cups', category: 'Side Condiments', image: '/b9d572a7-af59-4e63-92e8-2971440edffe.png' },
+  { id: 5, title: 'Custom IML Branded Packaging', category: 'In-Mould Labelling', image: '/images/media_1787711507848.png' },
+  { id: 6, title: 'High-Precision Plant Container Production', category: 'Plant Facility', image: '/images/media_1787712717089.png' }
 ];
 
 export default function GalleryPage() {
@@ -23,7 +23,7 @@ export default function GalleryPage() {
         title="Visual Product & Plant Gallery"
         subtitle="High-resolution imagery of our injection-moulded plastic containers, cleanroom production environment, and custom IML branded products."
         badge="PRODUCT & PLANT GALLERY"
-        bgImage="/b9d572a7-af59-4e63-92e8-2971440edffe.png"
+        bgImage="/50d728a7-e02c-49d9-b530-58a7db8a6ecc.png"
         breadcrumbs={[{ name: 'Gallery', href: '/gallery' }]}
       />
 

@@ -6,10 +6,12 @@ import { Container } from '../ui/Container';
 import { ArrowRight, Eye } from 'lucide-react';
 
 const galleryItems = [
-  { title: 'Hinge Cups & Sauce Containers', image: 'https://plus.unsplash.com/premium_photo-1664392020927-9344e87b378d?q=80&w=800&auto=format&fit=crop' },
-  { title: 'RO Series Round Gravy Tubs', image: 'https://plus.unsplash.com/premium_photo-1701213306445-9874fe01971a?w=800&auto=format&fit=crop' },
-  { title: 'RE Bento Meal Delivery Boxes', image: 'https://plus.unsplash.com/premium_photo-1701213306583-082f9bfd88b4?w=800&auto=format&fit=crop' },
-  { title: 'Portion Control Cups', image: 'https://plus.unsplash.com/premium_photo-1701213306476-132f16a0a01e?w=800&auto=format&fit=crop' }
+  { title: 'Hinge Cups & Sauce Containers', image: '/images/media_1787717762050.jpg' },
+  { title: 'RO Series Round Gravy Tubs', image: 'https://images.unsplash.com/photo-1581059474347-833e80d81ba8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+  { title: 'RE Bento Meal Delivery Boxes', image: '/50d728a7-e02c-49d9-b530-58a7db8a6ecc.png' },
+  { title: 'Portion Control Cups', image: '/b9d572a7-af59-4e63-92e8-2971440edffe.png' },
+  { title: 'Custom IML Branded Packaging', image: '/images/media_1787711507848.png' },
+  { title: 'Cleanroom Injection Moulding Facility', image: '/images/media_1787712717089.png' }
 ];
 
 export const GallerySection: React.FC = () => {
@@ -36,7 +38,7 @@ export const GallerySection: React.FC = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {galleryItems.map((item, idx) => (
             <div
               key={idx}
@@ -47,7 +49,7 @@ export const GallerySection: React.FC = () => {
                 alt={item.title}
                 className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
                 <span className="text-xs font-bold text-white leading-tight">{item.title}</span>
               </div>
             </div>

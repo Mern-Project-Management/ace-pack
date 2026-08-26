@@ -15,14 +15,14 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-0">
       <Hero />
+      <AboutSection />
       <CategoryShowcase />
       <FeatureShowcase />
-      <AboutSection />
-      <CapabilitiesSection />
-      <ProcessSection />
-      <VideoBanner />
-      <GallerySection />
-      <PricingSection />
+      {/* <ProcessSection /> */}
+      {/* <CapabilitiesSection /> */}
+      {/* <GallerySection /> */}
+      {/* <VideoBanner /> */}
+      {/* <PricingSection /> */}
       <FaqSection />
       <BlogSection />
       <ContactSection />

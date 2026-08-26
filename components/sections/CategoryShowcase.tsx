@@ -4,79 +4,74 @@ import React from 'react';
 import Link from 'next/link';
 import { productCategories } from '@/lib/data/products';
 import { Container } from '../ui/Container';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export const CategoryShowcase: React.FC = () => {
-  const featuredCategories = productCategories.slice(0, 6);
+  const showcaseCategories = productCategories.slice(0, 4);
 
   return (
-    <section className="py-16 bg-[#FAF8F4] border-b border-[#E6DBC6]/40">
+    <section className="py-20 bg-[#FAF8F4] text-[#1A1D20] border-b border-[#E6DBC6]/40 overflow-hidden">
       <Container>
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div>
+        {/* Left-Aligned Header matching user instruction */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16" data-aos="fade-right">
+          <div className="max-w-2xl text-left">
             <span className="text-xs font-extrabold text-[#b89858] uppercase tracking-wider block mb-2">
-              FEATURED CONTAINER LINES
+              OUR PRODUCT CATEGORIES
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1A1D20] tracking-tight">
-              Plastic Food Containers by Category
+              Premium Packaging Crafted for Every Food Line
             </h2>
           </div>
 
           <Link
             href="/categories"
-            className="text-xs font-bold text-[#b89858] hover:underline uppercase tracking-wider flex items-center gap-1.5 self-start md:self-auto"
+            className="inline-flex items-center gap-2 bg-[#b89858] hover:bg-[#9e8042] text-white text-xs font-bold px-6 py-3 rounded-full uppercase tracking-wider shadow transition-all shrink-0 self-start md:self-auto"
           >
             <span>View All 11 Categories</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        {/* 6 Grid Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredCategories.map((category) => (
-            <div
+        {/* 4 Light Cover Image Showcase Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {showcaseCategories.map((category, idx) => (
+            <Link
               key={category.id}
-              className="bg-white rounded-3xl border-2 border-[#b89858]/60 hover:border-[#b89858] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+              href={`/categories/${category.slug}`}
+              data-aos="fade-up"
+              data-aos-delay={idx * 150}
+              className="bg-white rounded-3xl overflow-hidden border border-[#E6DBC6] hover:border-[#b89858] transition-all duration-300 hover:shadow-2xl flex flex-col justify-between group text-left"
             >
               <div>
-                <div className="relative h-60 bg-[#050505] p-6 flex items-center justify-center border-b border-[#E6DBC6]">
+                {/* Full Width Cover Image Box (Matching User Requirement) */}
+                <div className="relative h-56 w-full overflow-hidden bg-slate-100">
                   <img
                     src={category.heroImage}
                     alt={category.name}
-                    className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-xl"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <span className="absolute top-3 right-3 bg-[#b89858] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">
-                    {category.products.length} Models
+                  <span className="absolute top-4 left-4 bg-black/75 backdrop-blur-md text-[#b89858] text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                    {category.subtitleName}
                   </span>
                 </div>
 
                 <div className="p-6">
-                  <span className="text-[10px] font-bold text-[#b89858] uppercase tracking-wider block mb-1">
-                    {category.subtitleName}
-                  </span>
-                  <Link href={`/categories/${category.slug}`}>
-                    <h3 className="text-xl font-bold text-[#1A1D20] mb-2 group-hover:text-[#b89858] transition-colors">
-                      {category.name}
-                    </h3>
-                  </Link>
-                  <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                  <h3 className="text-xl font-bold text-[#1A1D20] mb-2 group-hover:text-[#b89858] transition-colors">
+                    {category.name}
+                  </h3>
+
+                  <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed mb-4">
                     {category.shortDescription}
                   </p>
                 </div>
               </div>
 
-              <div className="px-6 pb-6 pt-2">
-                <Link
-                  href={`/categories/${category.slug}`}
-                  className="w-full bg-[#FAF8F4] hover:bg-[#b89858] text-[#1A1D20] hover:text-white border border-[#E6DBC6] hover:border-[#b89858] text-xs font-bold py-3 rounded-xl text-center uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-xs"
-                >
-                  <span>Explore Series</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+              <div className="px-6 pb-6 pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#b89858]">
+                <span>{category.products.length} Models Available</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

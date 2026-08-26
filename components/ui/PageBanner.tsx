@@ -19,7 +19,7 @@ export const PageBanner: React.FC<PageBannerProps> = ({
   title,
   subtitle,
   badge = 'ACEPACK PACKAGING',
-  bgImage = 'https://plus.unsplash.com/premium_photo-1701213306583-082f9bfd88b4?q=80&w=1200&auto=format&fit=crop',
+  bgImage = '/50d728a7-e02c-49d9-b530-58a7db8a6ecc.png',
   breadcrumbs = [],
 }) => {
   return (

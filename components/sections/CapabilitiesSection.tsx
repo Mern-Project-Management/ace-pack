@@ -1,77 +1,92 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { Container } from '../ui/Container';
-import { Cpu, Wrench, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Cpu, Wrench, ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const CapabilitiesSection: React.FC = () => {
-  const specs = [
-    { title: 'Machine Tonnage Range', value: '180T – 450T High-Speed Presses' },
-    { title: 'Cycle Speeds', value: '2.8s Ultra-Fast Cycle Times' },
-    { title: 'Wall Thickness Tolerance', value: '±0.02mm Precision Geometry' },
-    { title: 'Daily Plant Output', value: '1,500,000+ Units / Day' },
+  const capabilities = [
+    {
+      title: 'Robotic Injection Moulding Lines',
+      image: 'https://plus.unsplash.com/premium_photo-1701213306583-082f9bfd88b4?w=800&auto=format&fit=crop',
+      badge: '180T – 450T PRESSES',
+      description: '3-axis high-speed robotic pick-and-place automation ensuring zero human touch contamination and 2.8s cycle times.'
+    },
+    {
+      title: 'In-House CAD Toolroom & R&D',
+      image: 'https://plus.unsplash.com/premium_photo-1701213306445-9874fe01971a?w=800&auto=format&fit=crop',
+      badge: '3D SOLIDWORKS CAD',
+      description: 'Proprietary mold development with multi-cavity hot runners and optimized cooling channels for fast turnarounds.'
+    },
+    {
+      title: 'Cleanroom Quality Inspection',
+      image: 'https://plus.unsplash.com/premium_photo-1664392020927-9344e87b378d?q=80&w=800&auto=format&fit=crop',
+      badge: 'ISO 9001:2015 TESTED',
+      description: 'Dust-free manufacturing bays adhering strictly to US FDA direct food contact compliance and zero-leak pressure testing.'
+    }
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-[#FAF8F4] border-b border-[#E6DBC6]/40">
+    <section className="py-20 bg-[#111518] text-white border-b border-white/10">
       <Container>
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="text-xs font-extrabold text-[#b89858] uppercase tracking-wider block mb-2">
-            ENGINEERING EXCELLENCE
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1A1D20] tracking-tight">
-            Our Manufacturing Capabilities
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-600 mt-3 leading-relaxed">
-            High-speed robotic injection moulding, custom CAD mould engineering, cleanroom hygiene standards, and In-Mould Labelling (IML) technology.
-          </p>
+        {/* Top Header Bar matching Section 7 of reference mockup */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 pb-6 border-b border-white/10">
+          <div>
+            <span className="text-xs font-extrabold text-[#b89858] uppercase tracking-wider block mb-2">
+              OUR CAPABILITIES
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Aiming for Perfection in Food Packaging
+            </h2>
+          </div>
+
+          <Link
+            href="/capabilities"
+            className="inline-flex items-center gap-2 bg-[#b89858] hover:bg-[#9e8042] text-white text-xs font-bold px-6 py-3 rounded-full uppercase tracking-wider shadow transition-all self-start sm:self-auto"
+          >
+            <span>Explore Capabilities</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
-        {/* Key Specs Bar */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-14">
-          {specs.map((s, idx) => (
-            <div key={idx} className="bg-white p-6 rounded-3xl border-2 border-[#b89858]/60 shadow-sm text-center">
-              <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">{s.title}</span>
-              <span className="text-lg font-extrabold text-[#b89858]">{s.value}</span>
+        {/* 3 Column Studio Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {capabilities.map((item, idx) => (
+            <div
+              key={idx}
+              className="bg-[#050505] rounded-3xl overflow-hidden border-2 border-[#b89858]/60 hover:border-[#b89858] transition-all duration-300 hover:shadow-2xl flex flex-col justify-between group"
+            >
+              <div>
+                <div className="relative h-60 overflow-hidden bg-slate-900">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                  />
+                  <span className="absolute top-4 left-4 bg-[#b89858] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                    {item.badge}
+                  </span>
+                </div>
+
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#b89858] transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-gray-400 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+
+              <div className="px-6 pb-6 pt-2">
+                <div className="flex items-center gap-2 text-xs font-semibold text-[#b89858]">
+                  <CheckCircle2 className="w-4 h-4" /> 100% Quality Inspected
+                </div>
+              </div>
             </div>
           ))}
-        </div>
-
-        {/* Infrastructure Sections Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          
-          <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#E6DBC6] shadow-sm">
-            <div className="w-12 h-12 rounded-2xl bg-[#b89858]/15 text-[#b89858] flex items-center justify-center mb-6">
-              <Cpu className="w-6 h-6" />
-            </div>
-            <h3 className="text-2xl font-bold text-[#1A1D20] mb-4">Robotic Injection Moulding Line</h3>
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
-              Our plant houses state-of-the-art European & Taiwanese injection moulding machines equipped with 3-axis high-speed robotic pick-and-place automation, ensuring zero human touch contamination.
-            </p>
-            <ul className="space-y-2.5 text-xs text-gray-700">
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#b89858]" /> Automatic hot-runner multi-cavity moulds</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#b89858]" /> Real-time closed-loop temperature control</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#b89858]" /> High clarity resin plasticizing screws</li>
-            </ul>
-          </div>
-
-          <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#E6DBC6] shadow-sm">
-            <div className="w-12 h-12 rounded-2xl bg-[#b89858]/15 text-[#b89858] flex items-center justify-center mb-6">
-              <Wrench className="w-6 h-6" />
-            </div>
-            <h3 className="text-2xl font-bold text-[#1A1D20] mb-4">In-House CAD Toolroom & R&D</h3>
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
-              Our team of toolmakers and CAD designers engineer custom moulds with optimized cooling channels, allowing us to turn around prototype designs into mass production within short lead times.
-            </p>
-            <ul className="space-y-2.5 text-xs text-gray-700">
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#b89858]" /> 3D SolidWorks & Moldflow analysis</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#b89858]" /> CNC high-speed machining centers</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#b89858]" /> Custom branding embossing capabilities</li>
-            </ul>
-          </div>
-
         </div>
 
       </Container>
