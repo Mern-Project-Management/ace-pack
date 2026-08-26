@@ -1,0 +1,262 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Menu, X, PhoneCall, ChevronRight, ArrowRight, Sparkles } from 'lucide-react';
+import { productCategories } from '@/lib/data/products';
+
+export const Header: React.FC = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [megaMenuOpen, setMegaMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-300 bg-[#f3f3f3] border-b border-[#E6DBC6] text-[#1A1D20] ${
+        isScrolled ? 'shadow-md py-1.5' : 'py-2.5'
+      }`}
+    >
+      <div className="container-custom flex items-center justify-between">
+        
+        {/* Brand Logo - Official AcePack Logo */}
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="flex items-center justify-center">
+            <img
+              src="https://www.acepack.co.in/admin/images/header/Logo-6063_aaasdsadsa.png"
+              alt="AcePack Container Solutions"
+              className="h-10 sm:h-16 object-contain group-hover:scale-105 transition-transform"
+            />
+          </div>
+        </Link>
+
+        {/* Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-7 text-xs font-bold uppercase tracking-wider text-[#1A1D20]">
+          <Link href="/about" className="hover:text-[#b89858] transition-colors">
+            About Us
+          </Link>
+
+          {/* "Our Products" Mega Menu Trigger */}
+          <div
+            className="relative"
+            onMouseEnter={() => setMegaMenuOpen(true)}
+            onMouseLeave={() => setMegaMenuOpen(false)}
+          >
+            <Link
+              href="/categories"
+              className="hover:text-[#b89858] transition-colors inline-flex items-center gap-1 py-3 text-[#b89858]"
+            >
+              <span>Our Products</span>
+              <ChevronRight className={`w-3.5 h-3.5 transition-transform ${megaMenuOpen ? 'rotate-90 text-[#b89858]' : 'rotate-90 opacity-60'}`} />
+            </Link>
+
+            {/* Brand Theme (#b89858) Category-Wise Product Variant Mega Menu */}
+            {megaMenuOpen && (
+              <div className="absolute top-full left-1/2 -translate-x-1/2 w-[980px] bg-white border-2 border-[#b89858]/80 rounded-3xl shadow-2xl p-8 tracking-normal uppercase-none z-50">
+                
+                {/* Header Title Bar */}
+                <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#E6DBC6]">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#b89858]" />
+                    <span className="text-xs font-extrabold text-[#b89858] uppercase tracking-wider">
+                      Product Categories & Model Variants
+                    </span>
+                  </div>
+                  <Link
+                    href="/products"
+                    onClick={() => setMegaMenuOpen(false)}
+                    className="text-xs font-bold text-gray-700 hover:text-[#b89858] flex items-center gap-1 transition-colors"
+                  >
+                    <span>View All Products Catalog</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#b89858]" />
+                  </Link>
+                </div>
+
+                {/* Multi-Column Category-Wise Variant Grid styled with AcePack Brand Gold Theme (#b89858) */}
+                <div className="grid grid-cols-3 gap-x-10 gap-y-8 max-h-[460px] overflow-y-auto pr-2">
+                  {productCategories.map((category) => (
+                    <div key={category.id} className="flex flex-col">
+                      
+                      {/* Category Heading in Brand Gold (#b89858) */}
+                      <Link
+                        href={`/categories/${category.slug}`}
+                        onClick={() => setMegaMenuOpen(false)}
+                        className="group inline-block pb-2 mb-3 border-b-2 border-[#b89858]/40 hover:border-[#b89858] transition-colors"
+                      >
+                        <h3 className="text-sm font-extrabold text-[#b89858] group-hover:text-[#9e8042] transition-colors leading-tight">
+                          {category.name}
+                        </h3>
+                      </Link>
+
+                      {/* Variant List with Brand Gold Chevrons (›) */}
+                      <div className="space-y-2">
+                        {category.products.map((product) => (
+                          <Link
+                            key={product.id}
+                            href={`/categories/${category.slug}/${product.product_slug}`}
+                            onClick={() => setMegaMenuOpen(false)}
+                            className="flex items-center gap-2 text-xs font-semibold text-gray-800 hover:text-[#b89858] transition-colors group"
+                          >
+                            <span className="text-[#b89858] font-bold text-sm leading-none group-hover:translate-x-0.5 transition-transform">
+                              ›
+                            </span>
+                            <span className="leading-snug">{product.name}</span>
+                          </Link>
+                        ))}
+                      </div>
+
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom Footer Bar inside Mega Menu */}
+                <div className="mt-6 pt-4 border-t border-[#E6DBC6] flex items-center justify-between bg-[#FAF8F4] -mx-8 -mb-8 p-4 rounded-b-3xl text-xs text-gray-600">
+                  <span className="font-semibold text-gray-700">
+                    💡 All containers are manufactured from 100% Virgin PP 05 Food Grade Plastic.
+                  </span>
+                  <Link
+                    href="/contact"
+                    onClick={() => setMegaMenuOpen(false)}
+                    className="font-bold text-[#b89858] hover:underline uppercase tracking-wider"
+                  >
+                    Request Bulk Factory Quote →
+                  </Link>
+                </div>
+
+              </div>
+            )}
+          </div>
+
+          <Link href="/capabilities" className="hover:text-[#b89858] transition-colors">
+            Capabilities
+          </Link>
+
+          <Link href="/gallery" className="hover:text-[#b89858] transition-colors">
+            Gallery
+          </Link>
+
+          <Link href="/blog" className="hover:text-[#b89858] transition-colors">
+            Blogs
+          </Link>
+
+          <Link href="/contact" className="hover:text-[#b89858] transition-colors">
+            Contact
+          </Link>
+        </nav>
+
+        {/* Action Button */}
+        <div className="hidden sm:flex items-center gap-4">
+          <a
+            href="tel:+919820000000"
+            className="flex items-center gap-2 text-xs font-bold text-[#1A1D20] hover:text-[#b89858] transition-colors"
+          >
+            <PhoneCall className="w-3.5 h-3.5 text-[#b89858]" />
+            <span>+91 98200 00000</span>
+          </a>
+
+          <Link
+            href="/contact"
+            className="bg-[#b89858] hover:bg-[#9e8042] text-white text-xs font-bold px-5 py-3 rounded-full shadow-sm hover:shadow transition-all uppercase tracking-wider"
+          >
+            Get Quote
+          </Link>
+        </div>
+
+        {/* Mobile Hamburger Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="lg:hidden p-2 rounded-xl bg-[#E6DBC6]/50 text-[#1A1D20] hover:bg-[#E6DBC6] transition-colors"
+          aria-label="Toggle Navigation Menu"
+        >
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+
+      </div>
+
+      {/* Mobile Navigation Drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-[#f3f3f3] border-b border-[#E6DBC6] px-6 py-6 space-y-4 text-[#1A1D20]">
+          <nav className="flex flex-col gap-3 text-sm font-bold uppercase text-[#1A1D20]">
+            <Link
+              href="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 hover:text-[#b89858]"
+            >
+              Home
+            </Link>
+            <Link
+              href="/categories"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 text-[#b89858] font-extrabold"
+            >
+              Our Products (11 Categories)
+            </Link>
+            <Link
+              href="/products"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 hover:text-[#b89858]"
+            >
+              All Products Catalog
+            </Link>
+            <Link
+              href="/about"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 hover:text-[#b89858]"
+            >
+              About Us
+            </Link>
+            <Link
+              href="/capabilities"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 hover:text-[#b89858]"
+            >
+              Capabilities
+            </Link>
+            <Link
+              href="/gallery"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 hover:text-[#b89858]"
+            >
+              Gallery
+            </Link>
+            <Link
+              href="/blog"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 hover:text-[#b89858]"
+            >
+              Blogs & Insights
+            </Link>
+            <Link
+              href="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 hover:text-[#b89858]"
+            >
+              Contact Us
+            </Link>
+          </nav>
+
+          <div className="pt-4 border-t border-[#E6DBC6] flex flex-col gap-3">
+            <Link
+              href="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full bg-[#b89858] hover:bg-[#9e8042] text-white text-xs font-bold py-3 rounded-full text-center uppercase tracking-wider"
+            >
+              Request Quote
+            </Link>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
