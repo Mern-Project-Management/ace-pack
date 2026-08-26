@@ -16,8 +16,8 @@ export default function Home() {
     <div className="flex flex-col gap-0">
       <Hero />
       <AboutSection />
-      <CategoryShowcase />
       <FeatureShowcase />
+      <CategoryShowcase />
       {/* <ProcessSection /> */}
       {/* <CapabilitiesSection /> */}
       {/* <GallerySection /> */}
@@ -25,7 +25,7 @@ export default function Home() {
       {/* <PricingSection /> */}
       <FaqSection />
       <BlogSection />
-      <ContactSection />
+      {/* <ContactSection /> */}
     </div>
   );
 }

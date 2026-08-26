@@ -7,29 +7,30 @@ import { ArrowRight, ShieldCheck, CheckCircle2, ChevronRight, Flame, Sparkles } 
 
 const heroSlides = [
   {
-    image: '/images/media_1787717762050.jpg',
-    badge: '100% VIRGIN PP 05 FOOD GRADE',
-    title: 'High-Precision Plastic Food Container Manufacturing',
-    description: 'Engineered for cloud kitchens, QSR chains, and dairy brands. Microwave-safe, leak-proof rim geometry, and high stacking strength.'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1581059474347-833e80d81ba8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    badge: 'ONE-PIECE HINGE CUPS & PORTION CONTAINERS',
-    title: 'Zero-Leak Snap Rim Technology for Delivery & Takeaway',
-    description: 'Attached snap-tight lids eliminate sauce spillage during motorcycle delivery and streamline kitchen prep speed.'
-  },
-  {
-    image: '/50d728a7-e02c-49d9-b530-58a7db8a6ecc.png',
+    image: 'https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_11%20PM.png',
     badge: 'RO & RE SERIES CONTAINERS',
     title: 'Heavy-Duty Injection Moulded Tubs for Soups & Curries',
     description: 'Thermal resistance from -20°C deep freeze to +120°C hot soup filling. ISO 9001:2015 & FDA certified.'
   },
   {
-    image: '/b9d572a7-af59-4e63-92e8-2971440edffe.png',
+    image: 'https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_11%20PM.png',
     badge: 'CUSTOM IML BRANDED PACKAGING',
     title: 'Full-Color In-Mould Labelling for Cloud Kitchen Branding',
     description: 'High-definition full-color graphics fused directly into plastic container walls during moulding for waterproof, scratch-proof durability.'
-  }
+  },
+  {
+    image: 'https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_15%20PM.png',
+    badge: '100% VIRGIN PP 05 FOOD GRADE',
+    title: 'High-Precision Plastic Food Container Manufacturing',
+    description: 'Engineered for cloud kitchens, QSR chains, and dairy brands. Microwave-safe, leak-proof rim geometry, and high stacking strength.'
+  },
+  // {
+  //   image: 'https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_05_36%20PM.png',
+  //   badge: 'ONE-PIECE HINGE CUPS & PORTION CONTAINERS',
+  //   title: 'Zero-Leak Snap Rim Technology for Delivery & Takeaway',
+  //   description: 'Attached snap-tight lids eliminate sauce spillage during motorcycle delivery and streamline kitchen prep speed.'
+  // },
+  
 ];
 
 export const Hero: React.FC = () => {
@@ -45,7 +46,7 @@ export const Hero: React.FC = () => {
   }, [currentSlide]);
 
   return (
-    <section className="relative min-h-[580px] sm:min-h-[660px] bg-[#111518] text-white flex items-center overflow-hidden border-b border-[#E6DBC6]/30">
+    <section className="relative min-h-[640px] sm:min-h-[730px] bg-[#111518] text-white flex items-center overflow-hidden border-b border-[#E6DBC6]/30">
       
       {/* Underlying Base Image Layer */}
       <div className="absolute inset-0 z-0">
@@ -72,10 +73,11 @@ export const Hero: React.FC = () => {
       </motion.div>
 
       {/* Subtle Bottom-to-Top Gradient Overlay (Bottom Dark to Upper Side Light) */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/65 via-black/40 to-black/10" />
 
-      <div className="container-custom relative z-20 py-16 sm:py-24">
-        <div className="max-w-3xl">
+      {/* Main Content Container Aligned Exactly to Logo Left Margin */}
+      <div className="container-custom relative z-20 py-20 sm:py-28 text-left w-full">
+        <div className="max-w-3xl flex flex-col items-start justify-start text-left mr-auto">
           
           {/* Badge */}
           <motion.div
@@ -83,7 +85,7 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-[#b89858] text-white text-[11px] font-extrabold px-4 py-1.5 rounded-full uppercase tracking-wider mb-6 shadow-md"
+            className="inline-flex items-center gap-2 bg-[#b89858] text-white text-[11px] font-extrabold px-4 py-1.5 rounded-full uppercase tracking-wider mb-6 shadow-md self-start"
           >
             <ShieldCheck className="w-4 h-4" />
             <span>{heroSlides[currentSlide].badge}</span>
@@ -95,7 +97,7 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.12] mb-6 drop-shadow-md"
+            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.12] mb-6 drop-shadow-md text-left w-full"
           >
             {heroSlides[currentSlide].title}
           </motion.h1>
@@ -106,13 +108,13 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xs sm:text-base text-gray-100 leading-relaxed mb-8 max-w-2xl font-medium drop-shadow-sm"
+            className="text-xs sm:text-base text-gray-100 leading-relaxed mb-8 max-w-2xl font-medium drop-shadow-sm text-left w-full"
           >
             {heroSlides[currentSlide].description}
           </motion.p>
 
           {/* 3 Trust Feature Pills */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
+          <div className="flex flex-wrap items-center justify-start gap-3 mb-10 w-full">
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-2.5 rounded-2xl border border-white/15 text-xs text-gray-200">
               <CheckCircle2 className="w-4 h-4 text-[#b89858] shrink-0" />
               <span className="font-semibold">FDA 21 CFR Compliant</span>
@@ -128,7 +130,7 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Action CTAs */}
-          <div className="flex flex-wrap items-center gap-4 mb-10">
+          <div className="flex flex-wrap items-center justify-start gap-4 mb-10 w-full">
             <Link
               href="/categories"
               className="bg-[#b89858] hover:bg-[#9e8042] text-white text-xs sm:text-sm font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all uppercase tracking-wider flex items-center gap-2.5"
@@ -147,7 +149,7 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Slide Indicators */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-start gap-2 w-full">
             {heroSlides.map((_, idx) => (
               <button
                 key={idx}

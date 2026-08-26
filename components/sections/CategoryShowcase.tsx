@@ -7,7 +7,7 @@ import { Container } from '../ui/Container';
 import { ArrowRight } from 'lucide-react';
 
 export const CategoryShowcase: React.FC = () => {
-  const showcaseCategories = productCategories.slice(0, 4);
+  const showcaseCategories = productCategories.slice(0, 3);
 
   return (
     <section className="py-20 bg-[#FAF8F4] text-[#1A1D20] border-b border-[#E6DBC6]/40 overflow-hidden">
@@ -19,8 +19,8 @@ export const CategoryShowcase: React.FC = () => {
             <span className="text-xs font-extrabold text-[#b89858] uppercase tracking-wider block mb-2">
               OUR PRODUCT CATEGORIES
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1A1D20] tracking-tight">
-              Premium Packaging Crafted for Every Food Line
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1A1D20] tracking-tight">
+              Premium Packaging Crafted for Every Food
             </h2>
           </div>
 
@@ -33,41 +33,41 @@ export const CategoryShowcase: React.FC = () => {
           </Link>
         </div>
 
-        {/* 4 Light Cover Image Showcase Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* 3 Light Cover Image Showcase Cards Grid with Increased Height */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {showcaseCategories.map((category, idx) => (
             <Link
               key={category.id}
               href={`/categories/${category.slug}`}
               data-aos="fade-up"
               data-aos-delay={idx * 150}
-              className="bg-white rounded-3xl overflow-hidden border border-[#E6DBC6] hover:border-[#b89858] transition-all duration-300 hover:shadow-2xl flex flex-col justify-between group text-left"
+              className="bg-white rounded-2xl overflow-hidden border border-[#E6DBC6] hover:border-[#b89858] transition-all duration-300 hover:shadow-2xl flex flex-col justify-between group text-left min-h-[460px]"
             >
               <div>
-                {/* Full Width Cover Image Box (Matching User Requirement) */}
-                <div className="relative h-56 w-full overflow-hidden bg-slate-100">
+                {/* Full Width Cover Image Box (Increased Height h-64 sm:h-72) */}
+                <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100">
                   <img
                     src={category.heroImage}
                     alt={category.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <span className="absolute top-4 left-4 bg-black/75 backdrop-blur-md text-[#b89858] text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                  <span className="absolute top-4 left-4 bg-black/75 backdrop-blur-md text-[#b89858] text-[10px] font-extrabold px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
                     {category.subtitleName}
                   </span>
                 </div>
 
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-[#1A1D20] mb-2 group-hover:text-[#b89858] transition-colors">
+                <div className="p-7">
+                  <h3 className="text-2xl font-extrabold text-[#1A1D20] mb-2 group-hover:text-[#b89858] transition-colors leading-snug">
                     {category.name}
                   </h3>
 
-                  <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed mb-4">
+                  <p className="text-sm sm:text-base text-gray-600 line-clamp-2 leading-relaxed mb-4">
                     {category.shortDescription}
                   </p>
                 </div>
               </div>
 
-              <div className="px-6 pb-6 pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#b89858]">
+              <div className="px-6 pb-6 pt-2 border-t border-gray-100 flex items-center justify-between text-sm font-bold text-[#b89858]">
                 <span>{category.products.length} Models Available</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>

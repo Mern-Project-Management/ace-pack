@@ -34,7 +34,7 @@ export const PageBanner: React.FC<PageBannerProps> = ({
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/80" />
       </div>
 
-      <div className="container-custom relative z-10 text-center">
+      <div className="container-custom relative z-10 text-left">
         {/* Badge */}
         {badge && (
           <span className="inline-block bg-[#b89858] text-white text-[11px] font-extrabold px-4 py-1 rounded-full uppercase tracking-wider mb-4 shadow">
@@ -49,7 +49,7 @@ export const PageBanner: React.FC<PageBannerProps> = ({
 
         {/* Subtitle */}
         {subtitle && (
-          <p className="text-xs sm:text-sm text-gray-300 max-w-2xl mx-auto mb-6 leading-relaxed">
+          <p className="text-xs sm:text-sm text-gray-300 max-w-2xl mb-6 leading-relaxed">
             {subtitle}
           </p>
         )}
