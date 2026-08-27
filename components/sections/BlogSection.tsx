@@ -65,7 +65,7 @@ export const BlogSection: React.FC = () => {
                     <div className="flex items-center gap-4 text-[11px] text-gray-500 mb-3 font-medium">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3.5 h-3.5 text-[#b89858]" />
-                        {post.publishedAt}
+                        {post.date}
                       </span>
                       <span className="flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-[#b89858]" />
@@ -78,7 +78,7 @@ export const BlogSection: React.FC = () => {
                     </h3>
 
                     <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
-                      {post.excerpt}
+                      {post.summary}
                     </p>
                   </div>
                 </div>
