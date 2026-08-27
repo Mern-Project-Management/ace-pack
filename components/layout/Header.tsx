@@ -10,6 +10,7 @@ export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,32 +49,44 @@ export const Header: React.FC = () => {
             About Us
           </Link>
 
-          {/* "Our Products" Mega Menu Trigger */}
+          {/* "Our Products" Mega Menu Trigger — intentionally not `relative`
+              so the dropdown below anchors to the full-width <header> (which
+              is `sticky`, i.e. a positioning context) instead of this small
+              trigger, keeping it centered in the viewport at any breakpoint
+              regardless of where this link happens to sit in the nav. */}
           <div
-            className="relative"
             onMouseEnter={() => setMegaMenuOpen(true)}
             onMouseLeave={() => setMegaMenuOpen(false)}
           >
             <Link
               href="/categories"
-              className="hover:text-[#b89858] transition-colors inline-flex items-center gap-1 py-3 text-[#b89858]"
+              className={`hover:text-[#b89858] transition-colors inline-flex items-center gap-1 py-3 ${
+                megaMenuOpen ? 'text-[#b89858]' : ''
+              }`}
             >
               <span>Our Products</span>
-              <ChevronRight className={`w-3.5 h-3.5 transition-transform ${megaMenuOpen ? 'rotate-90 text-[#b89858]' : 'rotate-90 opacity-60'}`} />
+              <ChevronRight className={`w-3.5 h-3.5 rotate-90 transition-transform ${megaMenuOpen ? 'text-[#b89858]' : 'opacity-60'}`} />
             </Link>
 
-            {/* Brand Theme (#b89858) Category-Wise Product Variant Mega Menu */}
+            {/* Brand Theme (#b89858) Category-Wise Product Variant Mega Menu.
+                Positioning (centering) lives on this plain, non-animated
+                wrapper — NOT on the motion.div below. Framer Motion writes
+                its own inline `transform` for the opacity/y/scale animation,
+                which would silently overwrite a class-based `-translate-x-1/2`
+                on the same element (inline style always wins over a utility
+                class), so the two responsibilities have to be split. */}
             <AnimatePresence>
             {megaMenuOpen && (
+              <div className="absolute top-full left-1/2 -translate-x-1/2 w-[92vw] max-w-[960px] z-50">
               <motion.div
                 initial={{ opacity: 0, y: 10, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.98 }}
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute top-full left-1/2 -translate-x-1/2 w-[980px] bg-white border-2 border-[#b89858]/80 rounded-3xl shadow-2xl p-8 tracking-normal uppercase-none z-50 origin-top">
-                
+                className="bg-white border-2 border-[#b89858]/80 rounded-3xl shadow-2xl p-5 sm:p-8 tracking-normal uppercase-none origin-top">
+
                 {/* Header Title Bar */}
-                <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#E6DBC6]">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#E6DBC6]">
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-[#b89858]" />
                     <span className="text-xs font-extrabold text-[#b89858] uppercase tracking-wider">
@@ -91,7 +104,7 @@ export const Header: React.FC = () => {
                 </div>
 
                 {/* Multi-Column Category-Wise Variant Grid styled with AcePack Brand Gold Theme (#b89858) */}
-                <div className="grid grid-cols-3 gap-x-10 gap-y-8 max-h-[460px] overflow-y-auto pr-2">
+                <div className="grid grid-cols-2 xl:grid-cols-3 gap-x-6 sm:gap-x-10 gap-y-6 sm:gap-y-8 max-h-[60vh] xl:max-h-[460px] overflow-y-auto pr-2">
                   {productCategories.map((category) => (
                     <div key={category.id} className="flex flex-col">
                       
@@ -128,20 +141,21 @@ export const Header: React.FC = () => {
                 </div>
 
                 {/* Bottom Footer Bar inside Mega Menu */}
-                <div className="mt-6 pt-4 border-t border-[#E6DBC6] flex items-center justify-between bg-[#FAF8F4] -mx-8 -mb-8 p-4 rounded-b-3xl text-xs text-gray-600">
+                <div className="mt-6 pt-4 border-t border-[#E6DBC6] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#FAF8F4] -mx-5 sm:-mx-8 -mb-5 sm:-mb-8 p-4 rounded-b-3xl text-xs text-gray-600">
                   <span className="font-semibold text-gray-700">
                     💡 All containers are manufactured from 100% Virgin PP 05 Food Grade Plastic.
                   </span>
                   <Link
                     href="/contact"
                     onClick={() => setMegaMenuOpen(false)}
-                    className="font-bold text-[#b89858] hover:underline uppercase tracking-wider"
+                    className="font-bold text-[#b89858] hover:underline uppercase tracking-wider whitespace-nowrap"
                   >
                     Request Bulk Factory Quote →
                   </Link>
                 </div>
 
               </motion.div>
+              </div>
             )}
             </AnimatePresence>
           </div>
@@ -235,13 +249,51 @@ export const Header: React.FC = () => {
             >
               Home
             </Link>
-            <Link
-              href="/categories"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-[#b89858] font-extrabold"
-            >
-              Our Products (11 Categories)
-            </Link>
+            <div>
+              <button
+                type="button"
+                onClick={() => setMobileProductsOpen((v) => !v)}
+                className="w-full py-2 flex items-center justify-between hover:text-[#b89858]"
+                aria-expanded={mobileProductsOpen}
+              >
+                <span>Our Products (11 Categories)</span>
+                <ChevronRight
+                  className={`w-3.5 h-3.5 transition-transform ${mobileProductsOpen ? 'rotate-90' : ''}`}
+                />
+              </button>
+              <AnimatePresence initial={false}>
+                {mobileProductsOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ height: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.2 } }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pl-3 py-1 flex flex-col gap-1 border-l-2 border-[#E6DBC6] normal-case font-semibold text-xs text-gray-700">
+                      {productCategories.map((category) => (
+                        <Link
+                          key={category.id}
+                          href={`/categories/${category.slug}`}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="py-1.5 flex items-center gap-1.5 hover:text-[#b89858]"
+                        >
+                          <span className="text-[#b89858]">›</span>
+                          {category.name}
+                        </Link>
+                      ))}
+                      <Link
+                        href="/categories"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="py-1.5 mt-1 font-extrabold text-[#b89858] hover:underline"
+                      >
+                        View All Categories →
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             <Link
               href="/products"
               onClick={() => setMobileMenuOpen(false)}

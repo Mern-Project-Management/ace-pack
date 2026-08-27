@@ -1,11 +1,17 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Orbitron } from 'next/font/google';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ScrambleTitle } from '../ui/ScrambleTitle';
+
+// Three.js/WebGL — client-only, never rendered on the server.
+const ProductModel3D = dynamic(() => import('../ui/ProductModel3D').then((m) => m.ProductModel3D), {
+  ssr: false,
+});
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['700', '800', '900'] });
 
@@ -18,6 +24,7 @@ const heroSlides = [
   {
     background: '/images/hero-gold-wave-bg.png',
     product: '/images/hero-food-containers.png',
+    productModel: '/models/takeout-container.glb',
     sideProduct: '/images/hero-fruit-container.png',
     light: true,
     tagline: 'Heavy-duty tubs\nfor soups & curries',
@@ -77,7 +84,7 @@ export const Hero: React.FC = () => {
   const slide = heroSlides[currentSlide];
 
   return (
-    <section className="relative min-h-[640px] sm:min-h-[730px] bg-[#111518] text-white flex items-center overflow-hidden border-b border-[#E6DBC6]/30">
+    <section className="relative min-h-[560px] sm:min-h-[730px] bg-[#111518] text-white flex items-center overflow-hidden border-b border-[#E6DBC6]/30">
 
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.div
@@ -109,26 +116,34 @@ export const Hero: React.FC = () => {
             <div className="hero-float-title will-change-transform">
               <ScrambleTitle
                 text={slide.title}
-                className={`${orbitron.className} text-4xl sm:text-7xl lg:text-8xl font-black uppercase tracking-wide text-center drop-shadow-lg ${
-                  slide.light ? 'text-[#1A1D20]' : 'text-[#e8cf9e]'
-                }`}
+                className={`${orbitron.className} text-4xl sm:text-7xl lg:text-8xl font-black uppercase tracking-wide text-center drop-shadow-lg ${slide.light ? 'text-[#1A1D20]' : 'text-[#e8cf9e]'
+                  }`}
               />
             </div>
             {slide.product && (
               <div className="relative mt-4 flex flex-col items-center" style={{ perspective: '1600px' }}>
-                <img
-                  src={slide.product}
-                  alt="Product"
-                  style={{
-                    transformStyle: 'preserve-3d',
-                    transform: 'perspective(1600px) rotateX(14deg) rotateY(-10deg) scale(1.06) translateZ(30px)',
-                  }}
-                  className="max-h-[38vh] sm:max-h-[42vh] object-contain rounded-2xl [filter:drop-shadow(0_6px_6px_rgba(0,0,0,0.22))_drop-shadow(0_24px_18px_rgba(0,0,0,0.28))_drop-shadow(0_60px_45px_rgba(0,0,0,0.32))_drop-shadow(0_90px_60px_rgba(0,0,0,0.18))]"
-                />
-                <div
-                  aria-hidden="true"
-                  className="w-[62%] h-6 sm:h-9 mt-2 rounded-[100%] bg-black/50 blur-2xl"
-                />
+                {slide.productModel ? (
+                  <ProductModel3D
+                    src={slide.productModel}
+                    className="w-[70vw] max-w-[560px] h-[32vh] sm:h-[44vh] pointer-events-auto"
+                  />
+                ) : (
+                  <>
+                    <img
+                      src={slide.product}
+                      alt="Product"
+                      style={{
+                        transformStyle: 'preserve-3d',
+                        transform: 'perspective(1600px) rotateX(14deg) rotateY(-10deg) scale(1.06) translateZ(30px)',
+                      }}
+                      className="max-h-[38vh] sm:max-h-[42vh] object-contain rounded-2xl [filter:drop-shadow(0_6px_6px_rgba(0,0,0,0.22))_drop-shadow(0_24px_18px_rgba(0,0,0,0.28))_drop-shadow(0_60px_45px_rgba(0,0,0,0.32))_drop-shadow(0_90px_60px_rgba(0,0,0,0.18))]"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="w-[62%] h-6 sm:h-9 mt-2 rounded-[100%] bg-black/50 blur-2xl"
+                    />
+                  </>
+                )}
 
                 {/* Side product accent — floats independently for depth/parallax, tucked up-left of the main product */}
                 {slide.sideProduct && (
@@ -147,9 +162,8 @@ export const Hero: React.FC = () => {
           {/* Left side column */}
           <div className="hidden md:flex flex-col items-start absolute left-6 lg:left-14 top-1/2 -translate-y-1/2 z-20 max-w-[220px] pointer-events-auto">
             <p
-              className={`text-xs font-semibold uppercase tracking-wider leading-relaxed whitespace-pre-line mb-4 ${
-                slide.light ? 'text-[#1A1D20]' : 'text-gray-200'
-              }`}
+              className={`text-xs font-semibold uppercase tracking-wider leading-relaxed whitespace-pre-line mb-4 ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'
+                }`}
             >
               {slide.tagline}
             </p>
@@ -160,11 +174,10 @@ export const Hero: React.FC = () => {
             </div>
             <Link
               href="/categories"
-              className={`text-xs font-bold px-6 py-3.5 rounded-md shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 uppercase tracking-wider flex items-center gap-2 ${
-                slide.light
-                  ? 'bg-[#1A1D20] hover:bg-black text-[#e8cf9e]'
-                  : 'bg-[#111518] hover:bg-black text-[#e8cf9e]'
-              }`}
+              className={`text-xs font-bold px-6 py-3.5 rounded-md shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 uppercase tracking-wider flex items-center gap-2 ${slide.light
+                ? 'bg-[#1A1D20] hover:bg-black text-[#e8cf9e]'
+                : 'bg-[#111518] hover:bg-black text-[#e8cf9e]'
+                }`}
             >
               <span>Explore More</span>
               <ArrowRight className="w-4 h-4" />
@@ -185,9 +198,8 @@ export const Hero: React.FC = () => {
             </p>
             <Link
               href="/categories"
-              className={`text-xs font-bold px-6 py-3 rounded-md shadow-lg uppercase tracking-wider flex items-center gap-2 ${
-                slide.light ? 'bg-[#1A1D20] text-[#e8cf9e]' : 'bg-[#111518] text-[#e8cf9e]'
-              }`}
+              className={`text-xs font-bold px-6 py-3 rounded-md shadow-lg uppercase tracking-wider flex items-center gap-2 ${slide.light ? 'bg-[#1A1D20] text-[#e8cf9e]' : 'bg-[#111518] text-[#e8cf9e]'
+                }`}
             >
               <span>Explore More</span>
               <ArrowRight className="w-4 h-4" />
@@ -203,7 +215,7 @@ export const Hero: React.FC = () => {
             <button
               key={idx}
               onClick={() => goTo(idx)}
-              className="relative h-1 flex-1 rounded-full bg-white/20 overflow-hidden"
+              className="relative h-1.5 flex-1 rounded-full bg-[#b89858]/20 border border-[#b89858]/30 overflow-hidden"
               aria-label={`Go to slide ${idx + 1}`}
             >
               {idx === currentSlide && (

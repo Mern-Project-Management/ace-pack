@@ -45,3 +45,22 @@ body {
 .hero-float-side {
   animation: hero-float-side 7s ease-in-out infinite;
 }
+
+/* Narrow viewports have far less horizontal margin, so the full-amplitude
+   float can drift the title/side accent to the edge of the clipped section —
+   tone it down instead of letting it edge toward the frame. */
+@media (max-width: 640px) {
+  @keyframes hero-float-title {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(14px, -6px); }
+    75% { transform: translate(-14px, 6px); }
+    100% { transform: translate(0, 0); }
+  }
+
+  @keyframes hero-float-side {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(-10px, -14px) rotate(-3deg); }
+    66% { transform: translate(10px, 6px) rotate(2deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+}
