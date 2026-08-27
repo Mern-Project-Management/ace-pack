@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X, PhoneCall, ChevronRight, ArrowRight, Sparkles } from 'lucide-react';
 import { productCategories } from '@/lib/data/products';
 
@@ -62,8 +63,14 @@ export const Header: React.FC = () => {
             </Link>
 
             {/* Brand Theme (#b89858) Category-Wise Product Variant Mega Menu */}
+            <AnimatePresence>
             {megaMenuOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 w-[980px] bg-white border-2 border-[#b89858]/80 rounded-3xl shadow-2xl p-8 tracking-normal uppercase-none z-50">
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute top-full left-1/2 -translate-x-1/2 w-[980px] bg-white border-2 border-[#b89858]/80 rounded-3xl shadow-2xl p-8 tracking-normal uppercase-none z-50 origin-top">
                 
                 {/* Header Title Bar */}
                 <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#E6DBC6]">
@@ -134,8 +141,9 @@ export const Header: React.FC = () => {
                   </Link>
                 </div>
 
-              </div>
+              </motion.div>
             )}
+            </AnimatePresence>
           </div>
 
           <Link href="/capabilities" className="hover:text-[#b89858] transition-colors">
@@ -176,17 +184,49 @@ export const Header: React.FC = () => {
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 rounded-xl bg-[#E6DBC6]/50 text-[#1A1D20] hover:bg-[#E6DBC6] transition-colors"
+          className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-xl bg-[#E6DBC6]/50 text-[#1A1D20] hover:bg-[#E6DBC6] transition-colors"
           aria-label="Toggle Navigation Menu"
         >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          <AnimatePresence initial={false} mode="wait">
+            {mobileMenuOpen ? (
+              <motion.span
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <X className="w-6 h-6" />
+              </motion.span>
+            ) : (
+              <motion.span
+                key="open"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <Menu className="w-6 h-6" />
+              </motion.span>
+            )}
+          </AnimatePresence>
         </button>
 
       </div>
 
       {/* Mobile Navigation Drawer */}
+      <AnimatePresence>
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#f3f3f3] border-b border-[#E6DBC6] px-6 py-6 space-y-4 text-[#1A1D20]">
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ height: { duration: 0.35, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.25 } }}
+          className="lg:hidden overflow-hidden bg-[#f3f3f3] border-b border-[#E6DBC6] text-[#1A1D20]"
+        >
+        <div className="px-6 py-6 space-y-4">
           <nav className="flex flex-col gap-3 text-sm font-bold uppercase text-[#1A1D20]">
             <Link
               href="/"
@@ -256,7 +296,9 @@ export const Header: React.FC = () => {
             </Link>
           </div>
         </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </header>
   );
 };
