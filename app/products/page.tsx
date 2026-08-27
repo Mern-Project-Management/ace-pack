@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { productCategories } from '@/lib/data/products';
 import { PageBanner } from '@/components/ui/PageBanner';
+import { InfiniteCardCarousel } from '@/components/products/InfiniteCardCarousel';
 import { ShieldCheck, ArrowRight, Box } from 'lucide-react';
 import { Metadata } from 'next';
 
@@ -29,9 +30,27 @@ export default function ProductsPage() {
         breadcrumbs={[{ name: 'All Products', href: '/products' }]}
       />
 
+      {/* Infinite 3D card carousel — browse by category */}
+      <section className="py-16 md:py-20 bg-[#111518] overflow-hidden">
+        <div className="container-custom text-center mb-10">
+          <span className="text-xs font-extrabold text-[#b89858] uppercase tracking-wider block mb-2">
+            Browse by Category
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Drag through our 11 product lines</h2>
+        </div>
+        <InfiniteCardCarousel
+          cards={productCategories.map((cat) => ({
+            id: cat.id,
+            slug: cat.slug,
+            title: cat.name,
+            subtitle: cat.shortDescription,
+          }))}
+        />
+      </section>
+
       <section className="py-12 md:py-16">
         <div className="container-custom">
-          
+
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-[#E6DBC6]">
             <div>
               <h2 className="text-2xl font-bold text-[#1A1D20] flex items-center gap-2">

@@ -122,16 +122,39 @@ export const ProductModel3D: React.FC<ProductModel3DProps> = ({ src, className }
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(container);
 
+    // Otherwise this WebGL render loop (plus OrbitControls' damping math)
+    // runs forever at 60fps even while the canvas is scrolled far off-screen,
+    // competing with scroll compositing on the main thread — a real
+    // contributor to page-wide scroll jank on a page with several of these.
+    let running = false;
     const animate = () => {
+      if (!running) return;
       frameId = requestAnimationFrame(animate);
       controls.update();
       renderer.render(scene, camera);
     };
-    animate();
+    const start = () => {
+      if (running) return;
+      running = true;
+      animate();
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(frameId);
+    };
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) start();
+        else stop();
+      },
+      { threshold: 0 }
+    );
+    visibilityObserver.observe(container);
 
     return () => {
       disposed = true;
-      cancelAnimationFrame(frameId);
+      stop();
+      visibilityObserver.disconnect();
       resizeObserver.disconnect();
       controls.dispose();
       renderer.dispose();

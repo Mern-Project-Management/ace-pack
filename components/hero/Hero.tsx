@@ -27,26 +27,26 @@ const heroSlides = [
     productModel: '/models/takeout-container.glb',
     sideProduct: '/images/hero-fruit-container.png',
     light: true,
-    tagline: 'Heavy-duty tubs\nfor soups & curries',
+    tagline: 'Leak-proof tubs\nbuilt for hot delivery',
     title: 'CONTAINERS',
-    left: 'Injection moulded strength, built for cloud kitchens.',
-    right: 'Thermal resistance from -20°C deep freeze to +120°C hot fill. ISO 9001:2015 & FDA certified.'
+    left: 'Built for cloud kitchens and QSR delivery lines.',
+    right: '-20°C to +120°C thermal range. FDA & ISO 9001:2015 certified.'
   },
   {
     background: 'https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_11%20PM.png',
     product: '',
-    tagline: 'Full-color branding\nfused into the mould',
+    tagline: 'Your logo,\nmoulded in — not stuck on',
     title: 'BRANDING',
-    left: 'Custom IML branding, fused directly into the mould.',
-    right: 'High-definition graphics bonded into container walls during moulding for waterproof, scratch-proof durability.'
+    left: 'In-mould labelling, bonded into the container wall.',
+    right: 'Scratch-proof, waterproof, built to survive delivery.'
   },
   {
     background: 'https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_15%20PM.png',
     product: '',
-    tagline: 'Precision plastic\ncontainer manufacturing',
+    tagline: 'Precision-moulded\nfor every use case',
     title: 'PACKAGING',
-    left: 'Engineered for QSR chains and dairy brands.',
-    right: 'Microwave-safe, leak-proof rim geometry, and high stacking strength for delivery and takeaway.'
+    left: 'One factory, every format — QSR to dairy and sweets.',
+    right: 'Microwave-safe, leak-proof, built for high-volume stacking.'
   },
 ];
 
@@ -160,7 +160,7 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Left side column */}
-          <div className="hidden md:flex flex-col items-start absolute left-6 lg:left-14 top-1/2 -translate-y-1/2 z-20 max-w-[220px] pointer-events-auto">
+          <div className="hidden md:flex flex-col items-start absolute left-6 lg:left-24 xl:left-36 top-1/2 -translate-y-1/2 z-20 max-w-[220px] pointer-events-auto">
             <p
               className={`text-xs font-semibold uppercase tracking-wider leading-relaxed whitespace-pre-line mb-4 ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'
                 }`}
@@ -185,7 +185,7 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Right side column */}
-          <div className="hidden md:flex absolute right-6 lg:right-14 top-1/2 -translate-y-1/2 z-20 max-w-[260px]">
+          <div className="hidden md:flex absolute right-6 lg:right-24 xl:right-36 top-1/2 -translate-y-1/2 z-20 max-w-[260px]">
             <p className={`text-xs text-right leading-relaxed font-medium ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'}`}>
               {slide.right}
             </p>
