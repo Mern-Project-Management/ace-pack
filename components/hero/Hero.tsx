@@ -397,7 +397,7 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Mobile-only condensed content */}
-          <div className="md:hidden absolute inset-x-0 bottom-16 z-20 flex flex-col items-center text-center px-6 gap-3">
+          <div className="lg:hidden absolute inset-x-0 bottom-16 z-20 flex flex-col items-center text-center px-6 gap-3">
             <p className={`text-xs leading-relaxed font-medium ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'}`}>
               {slide.left} {slide.right}
             </p>
