@@ -18,7 +18,7 @@ import { HeroWaves } from './HeroWaves';
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['700', '800', '900'] });
 
-const AUTO_ADVANCE_MS = 5000;
+const AUTO_ADVANCE_MS = 7500;
 const PUSH_DURATION = 0.7;
 const PUSH_EASE: [number, number, number, number] = [0.65, 0, 0.35, 1];
 const PREMIUM_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -33,100 +33,135 @@ const heroSlides = [
   {
     background: '/images/hero-gold-wave-bg.png',
     product: '/images/hero-food-containers.png',
-    // productModel: '/models/takeout-container.glb', // 3D viewer disabled for now — flat image treatment (same as banner 2) used instead
     sideProduct: '/images/hero-fruit-container.png',
     light: true,
     decoration: 'waves' as const,
-    tagline: 'Leak-proof tubs\nbuilt for hot delivery',
+    tagline: 'SMART, SUSTAINABLE\nPACKAGING FOR BRANDS',
     title: 'CONTAINERS',
     left: 'Built for cloud kitchens and QSR delivery lines.',
-    right: '-20°C to +120°C thermal range. FDA & ISO 9001:2015 certified.'
+    right: 'SUSTAINABLE PACKAGING SOLUTIONS DESIGNED FOR BRANDS THAT DEMAND PERFORMANCE, IMPACT, AND RESPONSIBILITY.',
+    ctaText: 'EXPLORE MORE',
+    ctaLink: '/categories'
   },
   {
     background: '/images/banner2.png',
     product: '/images/product2banner.png',
     decoration: 'waves' as const,
-    tagline: 'Your logo,\nmoulded in — not stuck on',
+    tagline: 'YOUR LOGO MOULDED IN,\nNOT STUCK ON',
     title: 'BRANDING',
     left: 'In-mould labelling, bonded into the container wall.',
-    right: 'Scratch-proof, waterproof, built to survive delivery.'
+    right: 'DURABLE BRANDED PACKAGING DESIGNED FOR VISIBILITY, IMPACT, AND STRONG BRAND RECOGNITION ACROSS EVERY DELIVERY.',
+    ctaText: 'ORDER TODAY',
+    ctaLink: '/categories'
   },
   {
     background: 'https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_15%20PM.png',
-    product: '',
+    product: '/images/hero-zepack-products.webp',
     decoration: 'waves' as const,
-    tagline: 'Precision-moulded\nfor every use case',
+    tagline: 'PRECISION MOULDED\nFOR EVERY USE CASE',
     title: 'PACKAGING',
     left: 'One factory, every format — QSR to dairy and sweets.',
-    right: 'Microwave-safe, leak-proof, built for high-volume stacking.'
+    right: 'MICROWAVE-SAFE, LEAK-PROOF, BUILT FOR HIGH-VOLUME STACKING AND PREMIUM SHELF PRESENCE.',
+    ctaText: 'CUSTOMIZE NOW',
+    ctaLink: '/categories'
   },
 ];
 
-// Background layer: translates with the slide direction like the content
-// layer (so they still read as one slide), but carries its own slight
-// scale/opacity breathing so it doesn't feel like a flat carousel photo
-// snapping between frames.
-const backgroundVariants = {
-  enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', scale: 1.06, opacity: 0.85 }),
-  center: { x: '0%', scale: 1, opacity: 1 },
-  exit: (dir: number) => ({ x: dir > 0 ? '-100%' : '100%', scale: 1.06, opacity: 0.85 }),
-};
+// Motion variants: Opposing parallax effect with ultra-slow 2.2s pacing
+const SLIDE_DURATION = 2.2;
+const SLIDE_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-const backgroundTransition = { duration: PUSH_DURATION + 0.15, ease: PUSH_EASE };
-
-// Content layer only ever translates — the individual pieces inside it
-// (title, side copy, product, CTA) carry their own independent
-// opacity/translate/scale animations with a slight stagger, so the layers
-// don't all move identically.
-const pushVariants = {
-  enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%' }),
-  center: { x: '0%' },
-  exit: (dir: number) => ({ x: dir > 0 ? '-100%' : '100%' }),
-};
-
-const pushTransition = { duration: PUSH_DURATION, ease: PUSH_EASE };
-
-// Nested per-element variants — these are NOT keyed by currentSlide
-// themselves; the parent content wrapper's key change remounts them, which
-// retriggers initial -> animate on mount. That keeps each element on its own
-// timing/easing without needing a separate AnimatePresence per element
-// (multiple AnimatePresence trees sharing a key is what caused duplicate-key
-// warnings previously).
-const titleVariants = {
-  initial: { opacity: 0, y: 26, scale: 0.97 },
-  animate: { opacity: 1, y: 0, scale: 1 },
-};
-const titleTransition = { duration: 0.7, ease: PREMIUM_EASE, delay: 0.05 };
-
-const productRevealVariants = {
-  initial: { opacity: 0, y: 34, scale: 0.93 },
-  animate: { opacity: 1, y: 0, scale: 1 },
-};
-const productRevealTransition = { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const, delay: 0.12 };
-
-const sideTextVariants = {
-  left: {
-    initial: { opacity: 0, x: -26 },
-    animate: { opacity: 1, x: 0 },
+// 1. Background & Title Layer: Moves slowly to the LEFT side on next slide transition
+const bgTitleVariants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? '100%' : '-100%',
+    opacity: 1,
+    scale: 1.03
+  }),
+  center: {
+    x: '0%',
+    opacity: 1,
+    scale: 1
   },
-  right: {
-    initial: { opacity: 0, x: 26 },
-    animate: { opacity: 1, x: 0 },
+  exit: (dir: number) => ({
+    x: dir > 0 ? '-100%' : '100%',
+    opacity: 1,
+    scale: 0.97
+  }),
+};
+
+const bgTitleTransition = {
+  duration: SLIDE_DURATION,
+  ease: SLIDE_EASE
+};
+
+// 2. Center Product Image: Moves slowly to the RIGHT side on next slide transition
+const centerProductVariants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? '-100%' : '100%',
+    opacity: 0,
+    scale: 0.94
+  }),
+  center: {
+    x: '0%',
+    opacity: 1,
+    scale: 1
   },
+  exit: (dir: number) => ({
+    x: dir > 0 ? '100%' : '-100%',
+    opacity: 0,
+    scale: 1.06
+  }),
 };
-const sideTextTransition = { duration: 0.6, ease: PREMIUM_EASE, delay: 0.2 };
 
-const ctaVariants = {
-  initial: { opacity: 0, y: 14 },
-  animate: { opacity: 1, y: 0 },
+const centerProductTransition = {
+  duration: SLIDE_DURATION,
+  ease: SLIDE_EASE
 };
-const ctaTransition = { duration: 0.5, ease: PREMIUM_EASE, delay: 0.32 };
 
-// Ambient particle layer — persists across slide changes (no key on
-// currentSlide, mounted once) and drifts on its own sine-ish loop, fully
-// decoupled from both the slide push above and the product's idle float
-// below. Fixed positions/timings (not Math.random() at render time) so
-// there's no hydration mismatch and no re-shuffle on every re-render.
+// 3. Left Side Text Column: Bounded child slider inside its own left box
+const leftColumnVariants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? '-100%' : '100%',
+    opacity: 0
+  }),
+  center: {
+    x: '0%',
+    opacity: 1
+  },
+  exit: (dir: number) => ({
+    x: dir > 0 ? '100%' : '-100%',
+    opacity: 0
+  }),
+};
+
+const leftColumnTransition = {
+  duration: SLIDE_DURATION,
+  ease: SLIDE_EASE
+};
+
+// 4. Right Side Text Column: Bounded child slider inside its own right box
+const rightColumnVariants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? '-100%' : '100%',
+    opacity: 0
+  }),
+  center: {
+    x: '0%',
+    opacity: 1
+  },
+  exit: (dir: number) => ({
+    x: dir > 0 ? '100%' : '-100%',
+    opacity: 0
+  }),
+};
+
+const rightColumnTransition = {
+  duration: SLIDE_DURATION,
+  ease: SLIDE_EASE
+};
+
+// Ambient particle layer
 const HERO_PARTICLES = [
   { top: '18%', left: '12%', size: 6, px: 8, py: -16, duration: 5.2, delay: 0 },
   { top: '28%', left: '82%', size: 10, px: -6, py: 18, duration: 6.4, delay: 0.6 },
@@ -143,9 +178,6 @@ export const Hero: React.FC = () => {
   const [[currentSlide, direction], setSlide] = useState<[number, number]>([0, 1]);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Dot-nav jumps use simple index comparison for direction; prev/next arrows
-  // pass their direction explicitly so wraparound (last -> first, first ->
-  // last) still pushes the correct way instead of index comparison guessing wrong.
   const goTo = useCallback((idx: number) => {
     setSlide(([prev]) => [idx, idx > prev ? 1 : -1]);
   }, []);
@@ -154,9 +186,6 @@ export const Hero: React.FC = () => {
     setSlide(([prev]) => [(prev + dir + heroSlides.length) % heroSlides.length, dir]);
   }, []);
 
-  // Auto-advance, restarting the countdown any time the slide changes —
-  // manual prev/next clicks call goTo() too, which resets this same timer,
-  // so a manual click doesn't get instantly undone by the autoplay.
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
@@ -170,22 +199,20 @@ export const Hero: React.FC = () => {
   const slide = heroSlides[currentSlide];
 
   return (
-    <section className="relative min-h-[560px] sm:h-[calc(100vh-85px)] sm:max-h-[920px] sm:min-h-[640px] bg-[#111518] text-white overflow-hidden border-b border-[#E6DBC6]/30">
-      {/* LAYER 1 — Background: pushes with the slide direction plus its own
-          slight scale/opacity breathing, independent of the content layer's
-          timing (slightly longer duration) so it doesn't read as a flat
-          carousel image snapping between frames. */}
+    <section className="relative min-h-[580px] sm:h-[calc(100vh-85px)] sm:max-h-[920px] sm:min-h-[640px] bg-[#111518] text-white overflow-hidden border-b border-[#E6DBC6]/30">
+      {/* LAYER 1 — Background Artwork & Giant Title: Moves slowly to the LEFT side */}
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.div
-          key={currentSlide}
+          key={`bg-title-${currentSlide}`}
           custom={direction}
-          variants={backgroundVariants}
+          variants={bgTitleVariants}
           initial="enter"
           animate="center"
           exit="exit"
-          transition={backgroundTransition}
-          className="absolute inset-0 z-0"
+          transition={bgTitleTransition}
+          className="absolute inset-0 z-0 pointer-events-none"
         >
+          {/* Background Image */}
           <img
             src={slide.background}
             alt="Hero background"
@@ -194,16 +221,25 @@ export const Hero: React.FC = () => {
           <div
             className={
               slide.light
-                ? 'absolute inset-0 bg-gradient-to-t from-white/60 via-white/10 to-transparent'
-                : 'absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/10'
+                ? 'absolute inset-0 bg-gradient-to-t from-white/70 via-white/20 to-transparent'
+                : 'absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20'
             }
           />
+
+          {/* Large Backdrop Title */}
+          <div className="absolute inset-x-0 top-[18%] sm:top-[16%] flex justify-center items-center pointer-events-none px-4">
+            <h1
+              className={`${orbitron.className} text-5xl sm:text-7xl lg:text-[10rem] xl:text-[12rem] font-black uppercase tracking-wider text-center select-none ${
+                slide.light ? 'text-[#1A1D20]/15' : 'text-[#e8cf9e]/15'
+              } drop-shadow-2xl transition-colors duration-500`}
+            >
+              {slide.title}
+            </h1>
+          </div>
         </motion.div>
       </AnimatePresence>
 
-      {/* LAYER 2 — Decorative: wave lines + ambient particles. Mounted once,
-          never keyed by currentSlide, so nothing here resets on slide
-          change — only its own slow independent CSS-driven motion. */}
+      {/* LAYER 2 — Decorative: wave lines + ambient particles */}
       {slide.decoration === 'waves' && <HeroWaves className="z-[6]" />}
       <div aria-hidden="true" className="absolute inset-0 z-[8] overflow-hidden pointer-events-none">
         {HERO_PARTICLES.map((p, i) => (
@@ -225,211 +261,185 @@ export const Hero: React.FC = () => {
         ))}
       </div>
 
-      {/* LAYER 3-6 — Content: title, side copy, product, CTA. The wrapper
-          only translates with the slide direction; each child below carries
-          its own opacity/translate/scale animation with a slight stagger
-          (title first, product close behind, side copy after, CTA last) —
-          they retrigger because the parent's key remounts the whole
-          subtree, not because each child has its own key/AnimatePresence. */}
+      {/* LAYER 3 — Center Product Display: Moves slowly to the RIGHT side */}
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.div
-          key={currentSlide}
+          key={`center-product-${currentSlide}`}
           custom={direction}
-          variants={pushVariants}
+          variants={centerProductVariants}
           initial="enter"
           animate="center"
           exit="exit"
-          transition={pushTransition}
-          className="absolute inset-0 z-10 flex items-center"
+          transition={centerProductTransition}
+          className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none px-4 pt-10 sm:pt-14"
         >
-          {/* Soft staged glow behind the product — reads like a studio spotlight
-              on the podium instead of the product sitting flat on the page. */}
+          {/* Studio Spotlight Glow behind center pedestal */}
           <div
             aria-hidden="true"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] max-w-[860px] h-[46vh] rounded-full blur-3xl"
             style={{
               background: slide.light
-                ? 'radial-gradient(closest-side, rgba(184,152,88,0.22), transparent 72%)'
-                : 'radial-gradient(closest-side, rgba(232,207,158,0.16), transparent 72%)',
+                ? 'radial-gradient(closest-side, rgba(184,152,88,0.25), transparent 75%)'
+                : 'radial-gradient(closest-side, rgba(232,207,158,0.2), transparent 75%)',
             }}
           />
 
-          {/* LAYER 3+5 — Center: big heading + product cutout */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-4">
-            <motion.div
-              variants={titleVariants}
-              initial="initial"
-              animate="animate"
-              transition={titleTransition}
+          {slide.product && (
+            <div
+              className="relative flex flex-col items-center justify-center"
+              style={{ perspective: '1600px', transformStyle: 'preserve-3d' }}
             >
-              <div className="hero-float-title will-change-transform">
-                <h1
-                  className={`${orbitron.className} text-4xl sm:text-7xl lg:text-8xl font-black uppercase tracking-wide text-center drop-shadow-lg ${slide.light ? 'text-[#1A1D20]' : 'text-[#e8cf9e]'
-                    }`}
-                >
-                  {slide.title}
-                </h1>
+              {/* 3D Platform Pedestal Base */}
+              <div
+                aria-hidden="true"
+                className="absolute -bottom-6 sm:-bottom-8 left-1/2 -translate-x-1/2 w-[240px] sm:w-[380px] lg:w-[460px] h-10 sm:h-16 rounded-[100%] bg-gradient-to-r from-[#b89858]/20 via-[#e8cf9e]/40 to-[#b89858]/20 blur-sm border border-[#b89858]/30 shadow-[0_12px_40px_rgba(184,152,88,0.35)] pointer-events-none"
+              />
+
+              {/* Floating Product Image Cutout */}
+              <div className="hero-float-product will-change-transform z-10">
+                <img
+                  src={slide.product}
+                  alt={slide.title}
+                  className="max-h-[30vh] sm:max-h-[42vh] lg:max-h-[46vh] object-contain [filter:drop-shadow(0_25px_20px_rgba(0,0,0,0.3))_drop-shadow(0_50px_45px_rgba(0,0,0,0.25))]"
+                />
               </div>
-            </motion.div>
 
-            {slide.product && (
-              <motion.div
-                variants={productRevealVariants}
-                initial="initial"
-                animate="animate"
-                transition={productRevealTransition}
-                className="relative mt-8 sm:mt-14 flex flex-col items-center"
-                style={{ perspective: '1600px', transformStyle: 'preserve-3d' }}
-              >
-                {/* 3D viewer disabled for now — using the flat product-image
-                    treatment (same as banner 2) instead. Re-enable by restoring
-                    the ProductModel3D import/field above and swapping this back
-                    to a `slide.productModel ? <ProductModel3D .../> : (...)` ternary. */}
-                <>
-                  {/* Idle bob lives on this dedicated wrapper, driven purely by
-                      CSS (.hero-float-product) — it is not part of the
-                      Framer Motion reveal above, so it keeps running
-                      continuously and never restarts on slide change. */}
-                  <div className="hero-float-product will-change-transform">
-                    <img
-                      src={slide.product}
-                      alt="Product"
-                      className="max-h-[28vh] sm:max-h-[38vh] object-contain [filter:drop-shadow(0_20px_16px_rgba(0,0,0,0.25))_drop-shadow(0_50px_40px_rgba(0,0,0,0.2))]"
-                    />
-                  </div>
-                  {/* Ground shadow stays put and squashes/fades in sync with the
-                      float above — that contrast is what reads as "lifted". */}
-                  <div
-                    aria-hidden="true"
-                    className="hero-float-product-shadow w-[58%] h-5 sm:h-8 mt-1 rounded-[100%] bg-black/45 blur-2xl"
+              {/* Ground Shadow */}
+              <div
+                aria-hidden="true"
+                className="hero-float-product-shadow w-[65%] h-5 sm:h-8 mt-2 rounded-[100%] bg-black/50 blur-2xl"
+              />
+
+              {/* Side product accent */}
+              {slide.sideProduct && (
+                <div className="hero-float-side absolute -left-6 sm:-left-16 -top-4 sm:-top-10 pointer-events-none will-change-transform z-20">
+                  <img
+                    src={slide.sideProduct}
+                    alt="Product accent"
+                    className="w-24 sm:w-36 lg:w-44 object-contain [filter:drop-shadow(0_18px_14px_rgba(0,0,0,0.35))]"
                   />
-                </>
-                {/*
-                {slide.productModel ? (
-                  <ProductModel3D
-                    src={slide.productModel}
-                    className="w-[70vw] max-w-[620px] h-[32vh] sm:h-[56vh] pointer-events-auto"
-                  />
-                ) : (
-                  <>
-                    <div className="hero-float-product will-change-transform">
-                      <img
-                        src={slide.product}
-                        alt="Product"
-                        className="max-h-[38vh] sm:max-h-[56vh] object-contain [filter:drop-shadow(0_20px_16px_rgba(0,0,0,0.25))_drop-shadow(0_50px_40px_rgba(0,0,0,0.2))]"
-                      />
-                    </div>
-                    <div
-                      aria-hidden="true"
-                      className="hero-float-product-shadow w-[58%] h-5 sm:h-8 mt-1 rounded-[100%] bg-black/45 blur-2xl"
-                    />
-                  </>
-                )}
-                */}
-
-                {/* Side product accent — floats independently for depth/parallax, tucked up-left of the main product */}
-                {slide.sideProduct && (
-                  <div className="hero-float-side absolute -left-6 sm:-left-14 -top-4 sm:-top-10 pointer-events-none will-change-transform">
-                    <img
-                      src={slide.sideProduct}
-                      alt="Product accent"
-                      className="w-24 sm:w-36 lg:w-40 object-contain [filter:drop-shadow(0_18px_14px_rgba(0,0,0,0.3))]"
-                    />
-                  </div>
-                )}
-              </motion.div>
-            )}
-          </div>
-
-          {/* LAYER 4 — Left side column (tagline + CTA). Positioning
-              (absolute + top-1/2 -translate-y-1/2) lives on this plain
-              wrapper; Framer Motion's inline transform on the animated child
-              would otherwise silently overwrite that Tailwind translate on
-              the same element. */}
-          <div className="hidden lg:block absolute left-6 lg:left-24 xl:left-36 top-1/2 -translate-y-1/2 z-20 max-w-[220px]">
-            <motion.div
-              variants={sideTextVariants.left}
-              initial="initial"
-              animate="animate"
-              transition={sideTextTransition}
-              className="flex flex-col items-start pointer-events-auto"
-            >
-              <p
-                className={`text-xs font-semibold uppercase tracking-wider leading-relaxed whitespace-pre-line mb-4 ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'
-                  }`}
-              >
-                {slide.tagline}
-              </p>
-              <div className="flex items-center gap-1 text-[#b89858] mb-6" aria-hidden="true">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <ChevronRight key={i} className="w-3 h-3 -mx-0.5" strokeWidth={3} />
-                ))}
-              </div>
-              {/* LAYER 6 — CTA: its own animation, entering after the rest of the content */}
-              <motion.div variants={ctaVariants} initial="initial" animate="animate" transition={ctaTransition}>
-                <Link
-                  href="/categories"
-                  className={`text-xs font-bold px-6 py-3.5 rounded-md shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 uppercase tracking-wider flex items-center gap-2 ${slide.light
-                    ? 'bg-[#1A1D20] hover:bg-black text-[#e8cf9e]'
-                    : 'bg-[#111518] hover:bg-black text-[#e8cf9e]'
-                    }`}
-                >
-                  <span>Explore More</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* LAYER 4 — Right side column */}
-          <div className="hidden lg:block absolute right-6 lg:right-24 xl:right-36 top-1/2 -translate-y-1/2 z-20 max-w-[260px]">
-            <motion.div
-              variants={sideTextVariants.right}
-              initial="initial"
-              animate="animate"
-              transition={sideTextTransition}
-              className="flex"
-            >
-              <p className={`text-xs text-right leading-relaxed font-medium ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'}`}>
-                {slide.right}
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Mobile-only condensed content */}
-          <div className="lg:hidden absolute inset-x-0 bottom-16 z-20 flex flex-col items-center text-center px-6 gap-3">
-            <p className={`text-xs leading-relaxed font-medium ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'}`}>
-              {slide.left} {slide.right}
-            </p>
-            <Link
-              href="/categories"
-              className={`text-xs font-bold px-6 py-3 rounded-md shadow-lg uppercase tracking-wider flex items-center gap-2 ${slide.light ? 'bg-[#1A1D20] text-[#e8cf9e]' : 'bg-[#111518] text-[#e8cf9e]'
-                }`}
-            >
-              <span>Explore More</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+                </div>
+              )}
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
 
-      {/* "Up next" teaser — small, quiet label previewing the next slide's
-          category, sitting fixed above the sliding layer (matches the
-          reference banner's bottom-left teaser). */}
+      {/* LAYER 4 — Left Side Column: BOUNDED Child Slider (slides ONLY inside its 260px area) */}
+      <div className="hidden lg:block absolute left-8 lg:left-20 xl:left-28 top-1/2 -translate-y-1/2 z-20 w-[260px] overflow-hidden py-4">
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+          <motion.div
+            key={`left-col-${currentSlide}`}
+            custom={direction}
+            variants={leftColumnVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={leftColumnTransition}
+            className="flex flex-col items-start pointer-events-auto"
+          >
+            <p
+              className={`text-xs font-bold uppercase tracking-wider leading-relaxed whitespace-pre-line mb-3 ${
+                slide.light ? 'text-[#1A1D20]' : 'text-gray-100'
+              }`}
+            >
+              {slide.tagline}
+            </p>
+
+            {/* Zeropack Chevron Arrow Sequence >>>>>>>>>> */}
+            <div className="flex items-center text-[#b89858] font-mono tracking-tighter text-xs my-3 select-none" aria-hidden="true">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <ChevronRight key={i} className="w-3.5 h-3.5 -mx-0.5" strokeWidth={3} />
+              ))}
+            </div>
+
+            {/* Action Button */}
+            <div className="mt-2">
+              <Link
+                href={slide.ctaLink}
+                className={`text-xs font-black px-7 py-3.5 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 uppercase tracking-widest flex items-center gap-3 group border border-[#b89858]/40 ${
+                  slide.light
+                    ? 'bg-[#111518] hover:bg-black text-[#e8cf9e]'
+                    : 'bg-[#111518] hover:bg-black text-[#e8cf9e]'
+                }`}
+              >
+                <span>{slide.ctaText}</span>
+                <ArrowRight className="w-4 h-4 text-[#b89858] group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* LAYER 5 — Right Side Column: BOUNDED Child Slider (slides ONLY inside its 280px area) */}
+      <div className="hidden lg:block absolute right-8 lg:right-20 xl:right-28 top-1/2 -translate-y-1/2 z-20 w-[280px] overflow-hidden py-4">
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+          <motion.div
+            key={`right-col-${currentSlide}`}
+            custom={direction}
+            variants={rightColumnVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={rightColumnTransition}
+            className="flex flex-col items-end"
+          >
+            <p
+              className={`text-xs text-right leading-relaxed font-semibold uppercase tracking-wide ${
+                slide.light ? 'text-[#1A1D20]' : 'text-gray-200'
+              }`}
+            >
+              {slide.right}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Mobile Condensed Content Slider */}
+      <div className="lg:hidden absolute inset-x-0 bottom-16 z-20 overflow-hidden px-6">
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+          <motion.div
+            key={`mobile-col-${currentSlide}`}
+            custom={direction}
+            variants={leftColumnVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={leftColumnTransition}
+            className="flex flex-col items-center text-center gap-3"
+          >
+            <p className={`text-xs leading-relaxed font-semibold uppercase ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'}`}>
+              {slide.left} {slide.right}
+            </p>
+            <Link
+              href={slide.ctaLink}
+              className={`text-xs font-black px-6 py-3 rounded-lg shadow-lg uppercase tracking-widest flex items-center gap-2 border border-[#b89858]/40 ${
+                slide.light ? 'bg-[#1A1D20] text-[#e8cf9e]' : 'bg-[#111518] text-[#e8cf9e]'
+              }`}
+            >
+              <span>{slide.ctaText}</span>
+              <ArrowRight className="w-4 h-4 text-[#b89858]" />
+            </Link>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Up Next Teaser */}
       <button
         onClick={() => goDirection(1)}
         className="hidden sm:block absolute left-6 lg:left-10 bottom-7 z-30"
         aria-label={`Preview next slide: ${heroSlides[(currentSlide + 1) % heroSlides.length].title}`}
       >
         <span
-          className={`text-[11px] font-bold uppercase tracking-[0.25em] transition-colors hover:text-[#b89858] ${slide.light ? 'text-[#1A1D20]/45' : 'text-white/40'
-            }`}
+          className={`text-[11px] font-bold uppercase tracking-[0.25em] transition-colors hover:text-[#b89858] ${
+            slide.light ? 'text-[#1A1D20]/50' : 'text-white/40'
+          }`}
         >
           {heroSlides[(currentSlide + 1) % heroSlides.length].title}
         </span>
       </button>
 
-      {/* Fixed chrome: progress indicators, sits above the sliding layer */}
+      {/* Slide Progress Indicators */}
       <div className="absolute bottom-10 left-0 right-0 z-30 flex justify-center px-6">
         <div className="flex items-center justify-center gap-2 w-full max-w-xs">
           {heroSlides.map((_, idx) => (
@@ -454,17 +464,17 @@ export const Hero: React.FC = () => {
         </div>
       </div>
 
-      {/* Arrow navigation — solid dark chip so it stays visible over both light and dark slide backgrounds */}
+      {/* Side Navigation Arrow Buttons */}
       <button
         onClick={() => goDirection(-1)}
-        className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-10 h-10 rounded-full bg-[#1A1D20]/80 hover:bg-[#1A1D20] backdrop-blur-md border border-[#b89858]/40 shadow-md transition-colors"
+        className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-10 h-10 rounded-full bg-[#1A1D20]/85 hover:bg-[#1A1D20] backdrop-blur-md border border-[#b89858]/40 shadow-md transition-colors"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-5 h-5 text-[#e8cf9e]" />
       </button>
       <button
         onClick={() => goDirection(1)}
-        className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-10 h-10 rounded-full bg-[#1A1D20]/80 hover:bg-[#1A1D20] backdrop-blur-md border border-[#b89858]/40 shadow-md transition-colors"
+        className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-10 h-10 rounded-full bg-[#1A1D20]/85 hover:bg-[#1A1D20] backdrop-blur-md border border-[#b89858]/40 shadow-md transition-colors"
         aria-label="Next slide"
       >
         <ChevronRight className="w-5 h-5 text-[#e8cf9e]" />
