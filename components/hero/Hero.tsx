@@ -211,6 +211,7 @@ export const Hero: React.FC = () => {
           exit="exit"
           transition={bgTitleTransition}
           className="absolute inset-0 z-0 pointer-events-none"
+          style={{ willChange: 'transform, opacity' }}
         >
           {/* Background Image */}
           <img
@@ -272,12 +273,14 @@ export const Hero: React.FC = () => {
           exit="exit"
           transition={centerProductTransition}
           className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none px-4 pt-10 sm:pt-14"
+          style={{ willChange: 'transform, opacity' }}
         >
           {/* Studio Spotlight Glow behind center pedestal */}
           <div
             aria-hidden="true"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] max-w-[860px] h-[46vh] rounded-full blur-3xl"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] max-w-[860px] h-[46vh] rounded-full blur-3xl will-change-transform"
             style={{
+              transform: 'translate3d(-50%, -50%, 0)',
               background: slide.light
                 ? 'radial-gradient(closest-side, rgba(184,152,88,0.25), transparent 75%)'
                 : 'radial-gradient(closest-side, rgba(232,207,158,0.2), transparent 75%)',
@@ -337,6 +340,7 @@ export const Hero: React.FC = () => {
             exit="exit"
             transition={leftColumnTransition}
             className="flex flex-col items-start pointer-events-auto"
+            style={{ willChange: 'transform, opacity' }}
           >
             <p
               className={`text-xs font-bold uppercase tracking-wider leading-relaxed whitespace-pre-line mb-3 ${
@@ -383,6 +387,7 @@ export const Hero: React.FC = () => {
             exit="exit"
             transition={rightColumnTransition}
             className="flex flex-col items-end"
+            style={{ willChange: 'transform, opacity' }}
           >
             <p
               className={`text-xs text-right leading-relaxed font-semibold uppercase tracking-wide ${
@@ -407,6 +412,7 @@ export const Hero: React.FC = () => {
             exit="exit"
             transition={leftColumnTransition}
             className="flex flex-col items-center text-center gap-3"
+            style={{ willChange: 'transform, opacity' }}
           >
             <p className={`text-xs leading-relaxed font-semibold uppercase ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'}`}>
               {slide.left} {slide.right}

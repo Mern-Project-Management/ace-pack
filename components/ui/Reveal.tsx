@@ -20,8 +20,24 @@ function ensureGlobalScrollTriggerRefresh() {
   if (globalRefreshAttached || typeof window === 'undefined') return;
   globalRefreshAttached = true;
   const refresh = () => ScrollTrigger.refresh();
-  window.addEventListener('load', refresh);
-  setTimeout(refresh, 1200);
+  // ScrollTrigger.refresh() re-measures every registered trigger's position
+  // (a forced layout reflow per trigger) — with ~20-30 Reveal/SplitHeading
+  // instances on this page that's a genuine ~300-600ms main-thread block.
+  // Firing it on a fixed clock timer (the old `setTimeout(refresh, 1200)`)
+  // meant it very often landed exactly when a user had just started
+  // scrolling after load, producing the "laggy and choppy" stutter reported.
+  // requestIdleCallback runs it only once the browser is actually idle
+  // (falling back to a timer if it's never idle), so it no longer collides
+  // with an in-progress scroll gesture.
+  const scheduleRefresh = () => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(refresh, { timeout: 2000 });
+    } else {
+      setTimeout(refresh, 1200);
+    }
+  };
+  window.addEventListener('load', scheduleRefresh);
+  scheduleRefresh();
   // ScrollTrigger's own internal throttling is enough during scroll; lower
   // the global tick rate slightly so many simultaneous triggers (one per
   // revealed card) don't compete for main-thread time on scroll.
