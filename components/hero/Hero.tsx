@@ -229,8 +229,8 @@ export const Hero: React.FC = () => {
           {/* Large Backdrop Title */}
           <div className="absolute inset-x-0 top-[18%] sm:top-[16%] flex justify-center items-center pointer-events-none px-4">
             <h1
-              className={`${orbitron.className} text-5xl sm:text-7xl lg:text-[10rem] xl:text-[12rem] font-black uppercase tracking-wider text-center select-none ${
-                slide.light ? 'text-[#1A1D20]/15' : 'text-[#e8cf9e]/15'
+              className={`${orbitron.className} text-5xl sm:text-6xl lg:text-7xl xl:text-[8rem] font-black uppercase tracking-wider text-center select-none ${
+                slide.light ? 'text-[#1A1D20]/75' : 'text-[#e8cf9e]/95'
               } drop-shadow-2xl transition-colors duration-500`}
             >
               {slide.title}
@@ -286,7 +286,7 @@ export const Hero: React.FC = () => {
 
           {slide.product && (
             <div
-              className="relative flex flex-col items-center justify-center"
+              className="relative flex flex-col items-center justify-center translate-y-[25%]"
               style={{ perspective: '1600px', transformStyle: 'preserve-3d' }}
             >
               {/* 3D Platform Pedestal Base */}
