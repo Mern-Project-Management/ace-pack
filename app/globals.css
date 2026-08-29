@@ -46,6 +46,73 @@ body {
   animation: hero-float-side 7s ease-in-out infinite;
 }
 
+/* Product "lifted in the air" treatment: the product itself bobs up/down
+   while its ground shadow squashes and fades in sync — the shadow staying
+   put (not translating) is what sells the sense of height/lift. */
+@keyframes hero-float-product {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+@keyframes hero-float-product-shadow {
+  0%, 100% { transform: scaleX(1); opacity: 0.55; }
+  50% { transform: scaleX(0.75); opacity: 0.28; }
+}
+
+/* Continuous idle bob — independent of the hero slide's push transition
+   (which animates translateX on the outer slide wrapper, a different
+   element). Pure CSS animation on this dedicated wrapper so it keeps
+   running with zero JS involvement and is never reset by React re-renders. */
+.hero-float-product {
+  animation: hero-float-product 3.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-float-product-shadow {
+  animation: hero-float-product-shadow 3.5s ease-in-out infinite;
+}
+
+/* Ambient hero particles: a gentle sine-ish drift using each dot's own
+   --particle-x/--particle-y amplitude (set inline per dot) plus its own
+   animation-duration/animation-delay, so no two dots move in unison and
+   none of them are synced to the slide push timing. */
+@keyframes hero-particle-drift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(var(--particle-x), calc(var(--particle-y) * 0.55)); }
+  50% { transform: translate(calc(var(--particle-x) * -0.4), var(--particle-y)); }
+  75% { transform: translate(calc(var(--particle-x) * -1), calc(var(--particle-y) * 0.3)); }
+  100% { transform: translate(0, 0); }
+}
+
+.hero-particle {
+  animation-name: hero-particle-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+/* Decorative wave lines: very slow, barely-perceptible drift so the
+   background reads as alive rather than a static image, without competing
+   with the product/content. Two different durations so the pair doesn't
+   move in unison. */
+@keyframes hero-wave-drift-a {
+  0%, 100% { transform: translateX(0) scaleY(1); }
+  50% { transform: translateX(1.5%) scaleY(1.04); }
+}
+
+@keyframes hero-wave-drift-b {
+  0%, 100% { transform: translateX(0) scaleY(1); }
+  50% { transform: translateX(-2%) scaleY(0.97); }
+}
+
+.hero-wave-a {
+  animation: hero-wave-drift-a 22s ease-in-out infinite;
+}
+
+.hero-wave-b {
+  animation: hero-wave-drift-b 28s ease-in-out infinite;
+}
+
 /* Narrow viewports have far less horizontal margin, so the full-amplitude
    float can drift the title/side accent to the edge of the clipped section —
    tone it down instead of letting it edge toward the frame. */
@@ -62,5 +129,10 @@ body {
     33% { transform: translate(-10px, -14px) rotate(-3deg); }
     66% { transform: translate(10px, 6px) rotate(2deg); }
     100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+  @keyframes hero-float-product {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
   }
 }

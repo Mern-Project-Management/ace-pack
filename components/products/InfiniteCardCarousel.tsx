@@ -70,10 +70,7 @@ export const InfiniteCardCarousel: React.FC<InfiniteCardCarouselProps> = ({ card
     render();
   }, [render]);
 
-  // Click-and-drag / touch-swipe support — mirrors the reference GSAP demo.
-  // Runs on an invisible overlay (not the cards themselves) so Draggable's
-  // own applied transform never compounds with each card's own per-frame
-  // transform; we just read its `x` each tick and reset it to 0 on release.
+
   useEffect(() => {
     const overlay = overlayRef.current;
     if (!overlay) return;
