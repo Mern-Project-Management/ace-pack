@@ -25,7 +25,7 @@ export const Footer: React.FC = () => {
                     height={165}
                     loading="lazy"
                     decoding="async"
-                    className="h-9 object-contain"
+                    className="h-9 w-auto max-w-[70px] object-contain"
                   />
                 </div>
               </Link>

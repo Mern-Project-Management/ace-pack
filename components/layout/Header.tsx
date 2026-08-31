@@ -41,7 +41,7 @@ export const Header: React.FC = () => {
               width={320}
               height={165}
               decoding="async"
-              className="h-10 sm:h-16 object-contain group-hover:scale-105 transition-transform"
+              className="h-10 sm:h-16 w-auto max-w-[78px] sm:max-w-[124px] object-contain group-hover:scale-105 transition-transform"
             />
           </div>
         </Link>

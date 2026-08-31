@@ -416,9 +416,6 @@ export const Hero: React.FC = () => {
             className="flex flex-col items-center text-center gap-3"
             style={{ willChange: 'transform, opacity' }}
           >
-            <p className={`text-xs leading-relaxed font-semibold uppercase ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'}`}>
-              {slide.left} {slide.right}
-            </p>
             <Link
               href={slide.ctaLink}
               className={`text-xs font-black px-6 py-3 rounded-lg shadow-lg uppercase tracking-widest flex items-center gap-2 border border-[#b89858]/40 ${
