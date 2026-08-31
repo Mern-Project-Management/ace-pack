@@ -27,6 +27,8 @@ export const AboutSection: React.FC = () => {
                 <img
                   src="https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_15%20PM.png?updatedAt=1787732832021"
                   alt="AcePack Precision Moulding Facility"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -37,6 +39,8 @@ export const AboutSection: React.FC = () => {
                   <img
                     src="https://ik.imagekit.io/mikbqwyy0/AcePackaging/Flat%20Containers.png"
                     alt="AcePack Precision Container Series"
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent p-4 flex flex-col justify-end">

@@ -6,11 +6,10 @@ import { productCategories } from '@/lib/data/products';
 import { Container } from '../ui/Container';
 import { Reveal } from '../ui/Reveal';
 import { SplitHeading } from '../ui/SplitHeading';
+import { FlipCarousel } from '../ui/FlipCarousel';
 import { ArrowRight } from 'lucide-react';
 
 export const CategoryShowcase: React.FC = () => {
-  const showcaseCategories = productCategories.slice(0, 3);
-
   return (
     <section className="relative py-20 bg-[#FAF8F4] text-[#1A1D20] border-b border-[#E6DBC6]/40 overflow-hidden">
       <div aria-hidden="true" className="pointer-events-none absolute -top-16 right-1/4 w-[220px] sm:w-[400px] h-[220px] sm:h-[400px] rounded-full bg-[#b89858]/10 blur-[60px] sm:blur-[120px]" />
@@ -34,26 +33,31 @@ export const CategoryShowcase: React.FC = () => {
               href="/categories"
               className="inline-flex items-center gap-2 bg-[#b89858] hover:bg-[#9e8042] text-white text-xs font-bold px-6 py-3 rounded-full uppercase tracking-wider shadow hover:shadow-lg hover:shadow-[#b89858]/30 hover:scale-105 active:scale-95 transition-all duration-300 shrink-0 self-start md:self-auto"
             >
-              <span>View All 11 Categories</span>
+              <span>View All {productCategories.length} Categories</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </Reveal>
 
-        {/* 3 Light Cover Image Showcase Cards Grid with Increased Height */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {showcaseCategories.map((category, idx) => (
-            <Reveal key={category.id} type="fade-up" delay={idx * 0.15}>
+        {/* Caterpillar carousel through every product category */}
+        <Reveal type="fade-up">
+          <FlipCarousel
+            items={productCategories}
+            keyField="id"
+            visibleCount={{ base: 1, sm: 2, lg: 3 }}
+            gap={32}
+            renderItem={(category) => (
               <Link
                 href={`/categories/${category.slug}`}
-                className="bg-white rounded-2xl overflow-hidden border border-[#E6DBC6] hover:border-[#b89858] transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#b89858]/20 flex flex-col justify-between group text-left min-h-[460px]"
+                className="bg-white rounded-2xl overflow-hidden border border-[#E6DBC6] hover:border-[#b89858] transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#b89858]/20 flex flex-col justify-between group text-left min-h-[460px] h-full"
               >
                 <div>
-                  {/* Full Width Cover Image Box (Increased Height h-64 sm:h-72) */}
                   <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100">
                     <img
                       src={category.heroImage}
                       alt={category.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -78,9 +82,9 @@ export const CategoryShowcase: React.FC = () => {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
-            </Reveal>
-          ))}
-        </div>
+            )}
+          />
+        </Reveal>
 
       </Container>
     </section>

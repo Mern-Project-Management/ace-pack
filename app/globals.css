@@ -113,6 +113,19 @@ body {
   animation: hero-wave-drift-b 28s ease-in-out infinite;
 }
 
+/* Client logo trust strip: continuous leftward scroll of a doubled list,
+   so the loop point is invisible as long as the animation runs at a
+   constant linear speed across exactly half the doubled track width. */
+@keyframes logo-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes logo-marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
 /* Narrow viewports have far less horizontal margin, so the full-amplitude
    float can drift the title/side accent to the edge of the clipped section —
    tone it down instead of letting it edge toward the frame. */

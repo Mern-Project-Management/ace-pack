@@ -68,10 +68,36 @@ export const SplitHeading: React.FC<SplitHeadingProps> = ({
       );
     };
 
-    build();
+    // SplitText's line/word split forces a synchronous layout read per
+    // heading — cheap alone, but with ~8 SplitHeading instances across the
+    // homepage all mounting at once, doing every split immediately on load
+    // adds up into one multi-hundred-ms main-thread block before the page
+    // is even interactive. An IntersectionObserver defers each heading's
+    // split until it's actually getting close to view, spreading that cost
+    // out across scroll time instead of paying it all upfront — a heading
+    // already near the top of the viewport (e.g. right below the hero)
+    // still splits immediately since it's already within the margin.
+    let built = false;
+    const runBuildOnce = () => {
+      if (built) return;
+      built = true;
+      build();
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          runBuildOnce();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '600px 0px' }
+    );
+    observer.observe(el);
 
     let resizeTimer: ReturnType<typeof setTimeout>;
     const handleResize = () => {
+      if (!built) return;
       clearTimeout(resizeTimer);
       // Debounced: mobile browsers fire resize repeatedly while the address
       // bar shows/hides during scroll, so rebuilding on every tick would
@@ -81,6 +107,7 @@ export const SplitHeading: React.FC<SplitHeadingProps> = ({
     window.addEventListener('resize', handleResize);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
       clearTimeout(resizeTimer);
       tween?.scrollTrigger?.kill();

@@ -31,9 +31,9 @@ const PREMIUM_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 // Drop new asset URLs in here once ready — layout already expects both.
 const heroSlides = [
   {
-    background: '/images/hero-gold-wave-bg.png',
-    product: '/images/hero-food-containers.png',
-    sideProduct: '/images/hero-fruit-container.png',
+    background: '/images/hero-gold-wave-bg.webp',
+    product: '/images/hero-food-containers.webp',
+    sideProduct: '/images/hero-fruit-container.webp',
     light: true,
     decoration: 'waves' as const,
     tagline: 'SMART, SUSTAINABLE\nPACKAGING FOR BRANDS',
@@ -44,8 +44,8 @@ const heroSlides = [
     ctaLink: '/categories'
   },
   {
-    background: '/images/banner2.png',
-    product: '/images/product2banner.png',
+    background: '/images/banner2.webp',
+    product: '/images/product2banner.webp',
     decoration: 'waves' as const,
     tagline: 'YOUR LOGO MOULDED IN,\nNOT STUCK ON',
     title: 'BRANDING',
@@ -67,9 +67,9 @@ const heroSlides = [
   },
 ];
 
-// Motion variants: Opposing parallax effect with ultra-slow 2.2s pacing
-const SLIDE_DURATION = 2.2;
-const SLIDE_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+// Motion variants: Opposing parallax effect with smooth 1.0s easeInOut pacing
+const SLIDE_DURATION = 1.0;
+const SLIDE_EASE: [number, number, number, number] = [0.65, 0, 0.35, 1];
 
 // 1. Background & Title Layer: Moves slowly to the LEFT side on next slide transition
 const bgTitleVariants = {
@@ -100,7 +100,7 @@ const centerProductVariants = {
   enter: (dir: number) => ({
     x: dir > 0 ? '-100%' : '100%',
     opacity: 0,
-    scale: 0.94
+    scale: 1
   }),
   center: {
     x: '0%',
@@ -110,7 +110,7 @@ const centerProductVariants = {
   exit: (dir: number) => ({
     x: dir > 0 ? '100%' : '-100%',
     opacity: 0,
-    scale: 1.06
+    scale: 1
   }),
 };
 
@@ -217,6 +217,8 @@ export const Hero: React.FC = () => {
           <img
             src={slide.background}
             alt="Hero background"
+            fetchPriority="high"
+            decoding="async"
             className={`absolute inset-0 w-full h-full object-cover ${slide.light ? '' : 'filter brightness-[0.9]'}`}
           />
           <div

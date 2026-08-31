@@ -55,19 +55,19 @@ export const PageBanner: React.FC<PageBannerProps> = ({
         )}
 
         {/* Formal Breadcrumbs */}
-        <nav className="inline-flex items-center gap-2 bg-black/60 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 text-xs font-semibold">
-          <Link href="/" className="text-gray-300 hover:text-[#b89858] flex items-center gap-1 transition-colors">
-            <Home className="w-3.5 h-3.5 text-[#b89858]" />
+        <nav className="flex flex-wrap items-center gap-x-1.5 gap-y-1 sm:gap-2 max-w-full bg-black/60 backdrop-blur-md px-3 sm:px-5 py-1.5 sm:py-2 rounded-2xl sm:rounded-full border border-white/20 text-[11px] sm:text-xs font-semibold">
+          <Link href="/" className="text-gray-300 hover:text-[#b89858] flex items-center gap-1 transition-colors shrink-0">
+            <Home className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#b89858]" />
             <span>Home</span>
           </Link>
 
           {breadcrumbs.map((crumb, idx) => (
             <React.Fragment key={idx}>
-              <ChevronRight className="w-3.5 h-3.5 text-gray-500" />
+              <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-500 shrink-0" />
               {idx === breadcrumbs.length - 1 ? (
-                <span className="text-[#b89858] font-bold truncate max-w-[200px]">{crumb.name}</span>
+                <span className="text-[#b89858] font-bold truncate max-w-[140px] sm:max-w-[200px]">{crumb.name}</span>
               ) : (
-                <Link href={crumb.href} className="text-gray-300 hover:text-[#b89858] transition-colors">
+                <Link href={crumb.href} className="text-gray-300 hover:text-[#b89858] transition-colors truncate max-w-[100px] sm:max-w-none shrink-0">
                   {crumb.name}
                 </Link>
               )}

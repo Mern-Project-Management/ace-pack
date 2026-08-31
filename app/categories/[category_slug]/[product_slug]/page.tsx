@@ -57,30 +57,30 @@ export default async function SpecificProductPage({ params }: SpecificProductPag
         ]}
       />
 
-      <section className="py-12 md:py-16">
+      <section className="py-8 sm:py-12 md:py-16">
         <div className="container-custom">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            
-            <div className="lg:col-span-6 flex flex-col gap-6">
-              <div className="relative rounded-3xl overflow-hidden border-2 border-[#b89858]/80 bg-[#050505] p-8 sm:p-12 flex items-center justify-center min-h-[380px] sm:min-h-[460px] shadow-2xl">
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-10 items-start">
+
+            <div className="md:col-span-6 flex flex-col gap-4 sm:gap-6 md:sticky md:top-24 self-start z-10">
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-[#b89858]/80 bg-[#050505] p-5 sm:p-8 md:p-12 flex items-center justify-center min-h-[260px] sm:min-h-[380px] md:min-h-[460px] shadow-2xl">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="max-h-[380px] max-w-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  className="max-h-[240px] sm:max-h-[380px] max-w-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                 />
-                <span className="absolute top-4 right-4 bg-[#b89858] text-white text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
+                <span className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-[#b89858] text-white text-[10px] sm:text-xs font-bold px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full uppercase tracking-wider shadow">
                   {product.capacity}
                 </span>
-                <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#1A1D20] text-xs font-bold px-3.5 py-1.5 rounded-full border border-[#E6DBC6]">
+                <span className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white/90 backdrop-blur-md text-[#1A1D20] text-[10px] sm:text-xs font-bold px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-[#E6DBC6]">
                   ISO 9001 Tested
                 </span>
               </div>
 
               {category.gallery && category.gallery.length > 0 && (
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-2 sm:gap-3">
                   {category.gallery.map((img, idx) => (
-                    <div key={idx} className="border border-[#E6DBC6] rounded-2xl overflow-hidden bg-[#050505] p-3 h-24 flex items-center justify-center">
+                    <div key={idx} className="border border-[#E6DBC6] rounded-xl sm:rounded-2xl overflow-hidden bg-[#050505] p-2 sm:p-3 h-16 sm:h-24 flex items-center justify-center">
                       <img src={img} alt={`${product.name} view ${idx}`} className="max-h-full max-w-full object-contain" />
                     </div>
                   ))}
@@ -88,13 +88,13 @@ export default async function SpecificProductPage({ params }: SpecificProductPag
               )}
             </div>
 
-            <div className="lg:col-span-6 flex flex-col gap-8">
-              
-              <div className="bg-white p-8 rounded-3xl border border-[#E6DBC6] shadow-sm">
+            <div className="md:col-span-6 flex flex-col gap-5 sm:gap-8">
+
+              <div className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#E6DBC6] shadow-sm">
                 <span className="text-xs font-extrabold text-[#b89858] uppercase tracking-wider block mb-1">
                   CATEGORY: {category.name}
                 </span>
-                <h1 className="text-3xl font-extrabold text-[#1A1D20] mb-4">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A1D20] mb-4">
                   {product.name}
                 </h1>
 
@@ -122,8 +122,8 @@ export default async function SpecificProductPage({ params }: SpecificProductPag
 
                 <div className="mb-6">
                   <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#1A1D20] mb-3">Technical Specifications Table</h3>
-                  <div className="border border-[#E6DBC6] rounded-2xl overflow-hidden text-xs">
-                    <table className="w-full text-left border-collapse">
+                  <div className="border border-[#E6DBC6] rounded-2xl overflow-x-auto text-xs">
+                    <table className="w-full min-w-[420px] text-left border-collapse">
                       <tbody>
                         <tr className="border-b border-[#E6DBC6] bg-[#FAF8F4]">
                           <td className="p-3 font-bold text-gray-600 w-1/3">Size / Capacity</td>
@@ -172,8 +172,8 @@ export default async function SpecificProductPage({ params }: SpecificProductPag
                 )}
               </div>
 
-              <div className="bg-white p-8 rounded-3xl border-2 border-[#b89858]/70 shadow-md">
-                <h3 className="text-xl font-bold text-[#1A1D20] mb-1">Inquire Factory Pricing for {product.name}</h3>
+              <div className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-3xl border-2 border-[#b89858]/70 shadow-md">
+                <h3 className="text-lg sm:text-xl font-bold text-[#1A1D20] mb-1">Inquire Factory Pricing for {product.name}</h3>
                 <p className="text-xs text-gray-500 mb-6">Fill in your requirements below to receive a wholesale quote & free sample kit.</p>
 
                 <form className="space-y-4">

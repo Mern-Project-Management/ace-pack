@@ -2,6 +2,9 @@ import { Hero } from "@/components/hero/Hero";
 import { CategoryShowcase } from "@/components/sections/CategoryShowcase";
 import { FeatureShowcase } from "@/components/sections/FeatureShowcase";
 import { AboutSection } from "@/components/sections/AboutSection";
+import { IndustriesServed } from "@/components/sections/IndustriesServed";
+import { ClientLogos } from "@/components/sections/ClientLogos";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { CapabilitiesSection } from "@/components/sections/CapabilitiesSection";
 import { ProcessSection } from "@/components/sections/ProcessSection";
 import { VideoBanner } from "@/components/sections/VideoBanner";
@@ -18,6 +21,9 @@ export default function Home() {
       <AboutSection />
       <FeatureShowcase />
       <CategoryShowcase />
+      <IndustriesServed />
+      <ClientLogos />
+      <Testimonials />
       {/* <ProcessSection /> */}
       {/* <CapabilitiesSection /> */}
       {/* <GallerySection /> */}
@@ -25,7 +31,7 @@ export default function Home() {
       {/* <PricingSection /> */}
       <FaqSection />
       <BlogSection />
-      {/* <ContactSection /> */}
+      <ContactSection />
     </div>
   );
 }

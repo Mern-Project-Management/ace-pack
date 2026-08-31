@@ -100,6 +100,8 @@ export const FeatureShowcase: React.FC = () => {
                 <img
                   src="https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_11%20PM.png"
                   alt="AcePack Precision Food Packaging Line"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform duration-700 filter brightness-95"
                 />
 
