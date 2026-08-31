@@ -98,10 +98,10 @@ export const FeatureShowcase: React.FC = () => {
               {/* Main Featured Container Photo with Gold Border Glow */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-[#b89858]/60 hover:border-[#b89858] bg-[#050505] flex-1 w-full group">
                 <img
-                  src="https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_11%20PM.png?tr=w-1200,q-75,f-webp"
+                  src="https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_11%20PM.png?tr=w-800,q-78,f-webp"
                   alt="AcePack Precision Food Packaging Line"
-                  width={1200}
-                  height={675}
+                  width={800}
+                  height={450}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform duration-700 filter brightness-95"

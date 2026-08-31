@@ -19,8 +19,12 @@ export const Footer: React.FC = () => {
               <Link href="/" className="inline-block mb-6">
                 <div className="bg-white px-4 py-2 rounded-2xl border border-[#b89858]/40 shadow-md inline-flex items-center">
                   <img
-                    src="https://www.acepack.co.in/admin/images/header/Logo-6063_aaasdsadsa.png"
+                    src="/images/ace-logo.webp"
                     alt="AcePack Container Solutions"
+                    width={320}
+                    height={165}
+                    loading="lazy"
+                    decoding="async"
                     className="h-9 object-contain"
                   />
                 </div>

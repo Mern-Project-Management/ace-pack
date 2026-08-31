@@ -36,8 +36,11 @@ export const Header: React.FC = () => {
         <Link href="/" className="flex items-center gap-3 group">
           <div className="flex items-center justify-center">
             <img
-              src="https://www.acepack.co.in/admin/images/header/Logo-6063_aaasdsadsa.png"
+              src="/images/ace-logo.webp"
               alt="AcePack Container Solutions"
+              width={320}
+              height={165}
+              decoding="async"
               className="h-10 sm:h-16 object-contain group-hover:scale-105 transition-transform"
             />
           </div>

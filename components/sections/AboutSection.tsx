@@ -25,10 +25,10 @@ export const AboutSection: React.FC = () => {
               {/* Main Featured Facility & Container Image (Increased height) */}
               <div className="relative rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-slate-900 h-[440px] sm:h-[540px] lg:h-[580px] w-full">
                 <img
-                  src="https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_15%20PM.png?tr=w-1200,q-75,f-webp"
+                  src="https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_15%20PM.png?tr=w-800,q-78,f-webp"
                   alt="AcePack Precision Moulding Facility"
-                  width={1200}
-                  height={675}
+                  width={800}
+                  height={450}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover"
@@ -39,10 +39,10 @@ export const AboutSection: React.FC = () => {
               <Reveal type="zoom-in" delay={0.2}>
                 <div className="absolute -bottom-8 -right-2 sm:right-4 w-44 sm:w-64 h-40 sm:h-52 rounded-2xl overflow-hidden border-4 border-white shadow-2xl bg-slate-900 group">
                   <img
-                    src="https://ik.imagekit.io/mikbqwyy0/AcePackaging/Flat%20Containers.png?tr=w-600,q-75,f-webp"
+                    src="https://ik.imagekit.io/mikbqwyy0/AcePackaging/Flat%20Containers.png?tr=w-350,q-78,f-webp"
                     alt="AcePack Precision Container Series"
-                    width={600}
-                    height={526}
+                    width={350}
+                    height={307}
                     loading="lazy"
                     decoding="async"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
