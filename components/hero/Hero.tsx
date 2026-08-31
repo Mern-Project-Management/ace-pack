@@ -55,7 +55,7 @@ const heroSlides = [
     ctaLink: '/categories'
   },
   {
-    background: 'https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_15%20PM.png',
+    background: 'https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_15%20PM.png?tr=w-1920,q-75,f-webp',
     product: '/images/hero-zepack-products.webp',
     decoration: 'waves' as const,
     tagline: 'PRECISION MOULDED\nFOR EVERY USE CASE',
