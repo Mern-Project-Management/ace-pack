@@ -201,7 +201,7 @@ export const Hero: React.FC = () => {
   return (
     <section className="relative min-h-[580px] sm:h-[calc(100vh-85px)] sm:max-h-[920px] sm:min-h-[640px] bg-[#111518] text-white overflow-hidden border-b border-[#E6DBC6]/30">
       {/* LAYER 1 — Background Artwork & Giant Title: Moves slowly to the LEFT side */}
-      <AnimatePresence initial={false} custom={direction} mode="popLayout">
+      <AnimatePresence custom={direction} mode="popLayout">
         <motion.div
           key={`bg-title-${currentSlide}`}
           custom={direction}
@@ -265,7 +265,7 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* LAYER 3 — Center Product Display: Moves slowly to the RIGHT side */}
-      <AnimatePresence initial={false} custom={direction} mode="popLayout">
+      <AnimatePresence custom={direction} mode="popLayout">
         <motion.div
           key={`center-product-${currentSlide}`}
           custom={direction}
@@ -332,7 +332,7 @@ export const Hero: React.FC = () => {
 
       {/* LAYER 4 — Left Side Column: BOUNDED Child Slider (slides ONLY inside its 260px area) */}
       <div className="hidden lg:block absolute left-8 lg:left-20 xl:left-28 top-1/2 -translate-y-1/2 z-20 w-[260px] overflow-hidden py-4">
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+        <AnimatePresence custom={direction} mode="popLayout">
           <motion.div
             key={`left-col-${currentSlide}`}
             custom={direction}
@@ -379,7 +379,7 @@ export const Hero: React.FC = () => {
 
       {/* LAYER 5 — Right Side Column: BOUNDED Child Slider (slides ONLY inside its 280px area) */}
       <div className="hidden lg:block absolute right-8 lg:right-20 xl:right-28 top-1/2 -translate-y-1/2 z-20 w-[280px] overflow-hidden py-4">
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+        <AnimatePresence custom={direction} mode="popLayout">
           <motion.div
             key={`right-col-${currentSlide}`}
             custom={direction}
@@ -404,7 +404,7 @@ export const Hero: React.FC = () => {
 
       {/* Mobile Condensed Content Slider */}
       <div className="lg:hidden absolute inset-x-0 bottom-16 z-20 overflow-hidden px-6">
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+        <AnimatePresence custom={direction} mode="popLayout">
           <motion.div
             key={`mobile-col-${currentSlide}`}
             custom={direction}
