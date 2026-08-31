@@ -55,8 +55,11 @@ const heroSlides = [
     ctaLink: '/categories'
   },
   {
-    background: 'https://ik.imagekit.io/mikbqwyy0/AcePackaging/ChatGPT%20Image%20Aug%2026,%202026,%2012_02_15%20PM.png?tr=w-1920,q-75,f-webp',
-    product: '/images/hero-zepack-products.webp',
+    background: '/images/product3banner.png',
+    product: '/images/product3.png',
+    // Larger than the shared default (max-h-[30vh]/42vh/46vh) — this
+    // product photo reads small next to slides 1/2 at the default size.
+    productSizeClass: 'max-h-[38vh] sm:max-h-[52vh] lg:max-h-[58vh]',
     decoration: 'waves' as const,
     tagline: 'PRECISION MOULDED\nFOR EVERY USE CASE',
     title: 'PACKAGING',
@@ -232,9 +235,8 @@ export const Hero: React.FC = () => {
           {/* Large Backdrop Title */}
           <div className="absolute inset-x-0 top-[18%] sm:top-[16%] flex justify-center items-center pointer-events-none px-4">
             <h1
-              className={`${orbitron.className} text-5xl sm:text-6xl lg:text-7xl xl:text-[8rem] font-black uppercase tracking-wider text-center select-none ${
-                slide.light ? 'text-[#1A1D20]/75' : 'text-[#e8cf9e]/95'
-              } drop-shadow-2xl transition-colors duration-500`}
+              className={`${orbitron.className} text-5xl sm:text-6xl lg:text-7xl xl:text-[8rem] font-black uppercase tracking-wider text-center select-none ${slide.light ? 'text-[#1A1D20]/75' : 'text-[#e8cf9e]/95'
+                } drop-shadow-2xl transition-colors duration-500`}
             >
               {slide.title}
             </h1>
@@ -305,7 +307,7 @@ export const Hero: React.FC = () => {
                 <img
                   src={slide.product}
                   alt={slide.title}
-                  className="max-h-[30vh] sm:max-h-[42vh] lg:max-h-[46vh] object-contain [filter:drop-shadow(0_25px_20px_rgba(0,0,0,0.3))_drop-shadow(0_50px_45px_rgba(0,0,0,0.25))]"
+                  className={`${slide.productSizeClass ?? 'max-h-[30vh] sm:max-h-[42vh] lg:max-h-[46vh]'} object-contain [filter:drop-shadow(0_25px_20px_rgba(0,0,0,0.3))_drop-shadow(0_50px_45px_rgba(0,0,0,0.25))]`}
                 />
               </div>
 
@@ -345,9 +347,8 @@ export const Hero: React.FC = () => {
             style={{ willChange: 'transform, opacity' }}
           >
             <p
-              className={`text-xs font-bold uppercase tracking-wider leading-relaxed whitespace-pre-line mb-3 ${
-                slide.light ? 'text-[#1A1D20]' : 'text-gray-100'
-              }`}
+              className={`text-xs font-bold uppercase tracking-wider leading-relaxed whitespace-pre-line mb-3 ${slide.light ? 'text-[#1A1D20]' : 'text-gray-100'
+                }`}
             >
               {slide.tagline}
             </p>
@@ -363,11 +364,10 @@ export const Hero: React.FC = () => {
             <div className="mt-2">
               <Link
                 href={slide.ctaLink}
-                className={`text-xs font-black px-7 py-3.5 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 uppercase tracking-widest flex items-center gap-3 group border border-[#b89858]/40 ${
-                  slide.light
-                    ? 'bg-[#111518] hover:bg-black text-[#e8cf9e]'
-                    : 'bg-[#111518] hover:bg-black text-[#e8cf9e]'
-                }`}
+                className={`text-xs font-black px-7 py-3.5 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 uppercase tracking-widest flex items-center gap-3 group border border-[#b89858]/40 ${slide.light
+                  ? 'bg-[#111518] hover:bg-black text-[#e8cf9e]'
+                  : 'bg-[#111518] hover:bg-black text-[#e8cf9e]'
+                  }`}
               >
                 <span>{slide.ctaText}</span>
                 <ArrowRight className="w-4 h-4 text-[#b89858] group-hover:translate-x-1 transition-transform" />
@@ -392,9 +392,8 @@ export const Hero: React.FC = () => {
             style={{ willChange: 'transform, opacity' }}
           >
             <p
-              className={`text-xs text-right leading-relaxed font-semibold uppercase tracking-wide ${
-                slide.light ? 'text-[#1A1D20]' : 'text-gray-200'
-              }`}
+              className={`text-xs text-right leading-relaxed font-semibold uppercase tracking-wide ${slide.light ? 'text-[#1A1D20]' : 'text-gray-200'
+                }`}
             >
               {slide.right}
             </p>
@@ -418,9 +417,8 @@ export const Hero: React.FC = () => {
           >
             <Link
               href={slide.ctaLink}
-              className={`text-xs font-black px-6 py-3 rounded-lg shadow-lg uppercase tracking-widest flex items-center gap-2 border border-[#b89858]/40 ${
-                slide.light ? 'bg-[#1A1D20] text-[#e8cf9e]' : 'bg-[#111518] text-[#e8cf9e]'
-              }`}
+              className={`text-xs font-black px-6 py-3 rounded-lg shadow-lg uppercase tracking-widest flex items-center gap-2 border border-[#b89858]/40 ${slide.light ? 'bg-[#1A1D20] text-[#e8cf9e]' : 'bg-[#111518] text-[#e8cf9e]'
+                }`}
             >
               <span>{slide.ctaText}</span>
               <ArrowRight className="w-4 h-4 text-[#b89858]" />
@@ -436,9 +434,8 @@ export const Hero: React.FC = () => {
         aria-label={`Preview next slide: ${heroSlides[(currentSlide + 1) % heroSlides.length].title}`}
       >
         <span
-          className={`text-[11px] font-bold uppercase tracking-[0.25em] transition-colors hover:text-[#b89858] ${
-            slide.light ? 'text-[#1A1D20]/50' : 'text-white/40'
-          }`}
+          className={`text-[11px] font-bold uppercase tracking-[0.25em] transition-colors hover:text-[#b89858] ${slide.light ? 'text-[#1A1D20]/50' : 'text-white/40'
+            }`}
         >
           {heroSlides[(currentSlide + 1) % heroSlides.length].title}
         </span>
